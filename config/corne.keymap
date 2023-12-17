@@ -40,7 +40,7 @@ hm: homerow_mods {
 
             bindings = <
 &kp TAB  &kp Q  &kp W       &kp E               &kp R           &kp T        &kp Y    &kp U               &kp I           &kp O           &kp P       &trans
-&kp ESC  &kp A  &mt LGUI S  &mt LA(LEFT_ALT) D  &mt LCTRL F     &kp G        &kp H    &mt LEFT_CONTROL J  &mt LEFT_ALT K  &mt LEFT_GUI L  &lt 2 SEMI  &kp SQT
+&kp ESC  &kp A  &ht LGUI S  &ht LA(LEFT_ALT) D  &ht LCTRL F     &kp G        &kp H    &ht LEFT_CONTROL J  &ht LEFT_ALT K  &ht LEFT_GUI L  &lt 2 SEMI  &kp SQT
 &trans   &kp Z  &kp X       &kp C               &kp V           &kp B        &kp N    &kp M               &kp COMMA       &kp DOT         &kp FSLH    &trans
                             &mo 3               &kp LEFT_SHIFT  &kp SPACE    &kp RET  &kp BACKSPACE       &mo 1
             >;
@@ -55,7 +55,7 @@ hm: homerow_mods {
 
             bindings = <
 &kp TAB     &kp AMPS   &kp PRCNT        &kp HASH              &kp EXCL            &kp GRAVE    &kp TILDE  &kp KP_MULTIPLY      &kp AT                 &kp DLLR               &kp CARET     &kp PIPE
-&kp ESCAPE  &kp N7     &mt LEFT_GUI N5  &mt LEFT_ALT N3       &mt LCTRL NUMBER_1  &kp N9       &kp N8     &mt LEFT_CONTROL N0  &mt LEFT_ALT NUMBER_2  &mt LEFT_GUI NUMBER_4  &kp NUMBER_6  &kp BSLH
+&kp ESCAPE  &kp N7     &ht LEFT_GUI N5  &ht LEFT_ALT N3       &ht LCTRL NUMBER_1  &kp N9       &kp N8     &ht LEFT_CONTROL N0  &ht LEFT_ALT NUMBER_2  &ht LEFT_GUI NUMBER_4  &kp NUMBER_6  &kp BSLH
 &trans      &kp MINUS  &kp UNDER        &kp LEFT_PARENTHESIS  &kp LEFT_BRACKET    &kp LBRC     &kp RBRC   &kp RIGHT_BRACKET    &kp RIGHT_PARENTHESIS  &kp EQUAL              &kp PLUS      &trans
                                         &mo 1                 &kp LEFT_SHIFT      &kp SPACE    &kp RET    &kp BACKSPACE        &mo 0
             >;
