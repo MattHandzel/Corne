@@ -42,9 +42,9 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&kp TAB     &kp N7        &kp N5        &kp N3        &kp NUMBER_1    &kp N9          &kp N8    &kp N0    &kp NUMBER_2  &kp NUMBER_4  &kp NUMBER_6  &kp BSPC
-&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3    &bt BT_SEL 4    &kp LEFT  &kp DOWN  &kp UP        &kp RIGHT     &trans        &trans
-&kp LSHFT   &trans        &trans        &trans        &trans          &trans          &trans    &trans    &trans        &trans        &trans        &trans
+&kp TAB     &kp AMPS   &kp PRCNT  &kp HASH  &kp EXCEL  &kp KP_MULTIPLY    &kp KP_MULTIPLY  &kp AMPS   &kp AT  &kp DLLR  &kp CARET  &kp BSPC
+&kp ESCAPE     &kp N7        &kp N5        &kp N3        &kp NUMBER_1    &kp N9          &kp N8    &kp N0    &kp NUMBER_2  &kp NUMBER_4  &kp NUMBER_6  &kp BSPC
+&trans   &trans      &trans             &trans           &trans                &trans                  &trans  &trans           &trans  &trans  &trans  &trans
                                         &mo 1         &kp LEFT_SHIFT  &kp SPACE       &kp RET   &trans    &kp RALT
             >;
         };
@@ -57,7 +57,7 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&kp TAB     &kp EXCL  &kp AT  &kp HASH  &kp DLLR  &kp PRCNT    &kp CARET  &kp AMPS   &kp KP_MULTIPLY  &kp LPAR  &kp RPAR  &kp BSPC
+&kp LSHFT   &trans        &trans        &trans        &trans          &trans          &trans    &trans    &trans        &trans        &trans        &trans
 &kp ESCAPE  &trans    &trans  &trans    &trans    &trans       &kp MINUS  &kp EQUAL  &kp LBKT         &kp RBKT  &kp BSLH  &kp GRAVE
 &kp LSHFT   &trans    &trans  &trans    &trans    &trans       &kp UNDER  &kp PLUS   &kp LBRC         &kp RBRC  &kp PIPE  &kp TILDE
                               &kp LGUI  &trans    &kp SPACE    &kp RET    &trans     &kp BACKSPACE
@@ -77,7 +77,7 @@
             bindings = <
 &kp F11  &kp F7      &kp F5             &kp F3           &kp F1                &kp F9                  &kp F8  &kp F10          &kp F2  &kp F4  &kp F6  &kp F12
 &trans   &kp K_MUTE  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &trans  &kp PRINTSCREEN  &trans  &trans  &trans  &trans
-&trans   &trans      &trans             &trans           &trans                &trans                  &trans  &trans           &trans  &trans  &trans  &trans
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3    &bt BT_SEL 4    &kp LEFT  &kp DOWN  &kp UP        &kp RIGHT     &trans        &trans
                                         &trans           &trans                &trans                  &trans  &trans           &trans
             >;
         };
