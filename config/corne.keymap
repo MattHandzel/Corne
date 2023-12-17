@@ -43,7 +43,7 @@
 
             bindings = <
 &kp TAB     &kp AMPS   &kp PRCNT  &kp HASH              &kp EXCL            &kp GRAVE    &kp TILDE  &kp KP_MULTIPLY    &kp AT                 &kp DLLR      &kp CARET     &kp PIPE
-&kp ESCAPE  &kp N7     &kp N5     &kp N3                &mt LCTRL NUMBER_1  &kp N9       &kp N8     &kp N0             &kp NUMBER_2           &kp NUMBER_4  &kp NUMBER_6  &kp BSLH
+&kp ESCAPE  &kp N7     &mt LEFT_GUI N5     &mt LEFT_ALT N3                &mt LCTRL NUMBER_1  &kp N9       &kp N8     &mt LEFT_CONTROL N0             &mt LEFT_ALT NUMBER_2           &mt LEFT_GUI NUMBER_4  &kp NUMBER_6  &kp BSLH
 &trans      &kp MINUS  &kp UNDER  &kp LEFT_PARENTHESIS  &kp LEFT_BRACKET    &kp LBRC     &kp RBRC   &kp RIGHT_BRACKET  &kp RIGHT_PARENTHESIS  &kp EQUAL     &kp PLUS      &trans
                                   &mo 1                 &kp LEFT_SHIFT      &kp SPACE    &kp RET    &kp BACKSPACE      &mo 2
             >;
