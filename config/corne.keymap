@@ -14,12 +14,6 @@
     };
 
     behaviors {
-        new_behavior: new_behavior {
-            compatible = "zmk,behavior-key-repeat";
-            label = "NEW_BEHAVIOR";
-            #binding-cells = <0>;
-            usage-pages = 1;
-        };
     };
 
     keymap {
