@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 The ZMK Contributors
+ * Copyrighm (c) 2020 The ZMK Contributors
  *
  * SPDX-License-Identifier: MIT
  */
@@ -40,7 +40,7 @@ hm: homerow_mods {
 
             bindings = <
 &kp TAB  &kp Q  &kp W       &kp E               &kp R           &kp T        &kp Y    &kp U               &kp I           &kp O           &kp P       &trans
-&kp ESC  &kp A  &ht LGUI S  &ht LA(LEFT_ALT) D  &ht LCTRL F     &kp G        &kp H    &ht LEFT_CONTROL J  &ht LEFT_ALT K  &ht LEFT_GUI L  &lt 2 SEMI  &kp SQT
+&kp ESC  &kp A  &hm LGUI S  &hm LA(LEFT_ALT) D  &hm LCTRL F     &kp G        &kp H    &hm LEFT_CONTROL J  &hm LEFT_ALT K  &hm LEFT_GUI L  &lt 2 SEMI  &kp SQT
 &trans   &kp Z  &kp X       &kp C               &kp V           &kp B        &kp N    &kp M               &kp COMMA       &kp DOT         &kp FSLH    &trans
                             &mo 3               &kp LEFT_SHIFT  &kp SPACE    &kp RET  &kp BACKSPACE       &mo 1
             >;
@@ -55,16 +55,16 @@ hm: homerow_mods {
 
             bindings = <
 &kp TAB     &kp AMPS   &kp PRCNT        &kp HASH              &kp EXCL            &kp GRAVE    &kp TILDE  &kp KP_MULTIPLY      &kp AT                 &kp DLLR               &kp CARET     &kp PIPE
-&kp ESCAPE  &kp N7     &ht LEFT_GUI N5  &ht LEFT_ALT N3       &ht LCTRL NUMBER_1  &kp N9       &kp N8     &ht LEFT_CONTROL N0  &ht LEFT_ALT NUMBER_2  &ht LEFT_GUI NUMBER_4  &kp NUMBER_6  &kp BSLH
-&trans      &kp MINUS  &kp UNDER        &kp LEFT_PARENTHESIS  &kp LEFT_BRACKET    &kp LBRC     &kp RBRC   &kp RIGHT_BRACKET    &kp RIGHT_PARENTHESIS  &kp EQUAL              &kp PLUS      &trans
+&kp ESCAPE  &kp N7     &hm LEFT_GUI N5  &hm LEFT_ALT N3       &hm LCTRL NUMBER_1  &kp N9       &kp N8     &hm LEFT_CONTROL N0  &hm LEFT_ALT NUMBER_2  &hm LEFT_GUI NUMBER_4  &kp NUMBER_6  &kp BSLH
+&trans      &kp MINUS  &kp UNDER        &kp LEFT_PARENTHESIS  &kp LEFT_BRACKET    &kp LBRC     &kp RBRC   &kp RIGhm_BRACKET    &kp RIGhm_PARENTHESIS  &kp EQUAL              &kp PLUS      &trans
                                         &mo 1                 &kp LEFT_SHIFT      &kp SPACE    &kp RET    &kp BACKSPACE        &mo 0
             >;
         };
 
         layer_3 {
             bindings = <
-&trans  &trans  &kp LC(RIGHT_ARROW)  &trans             &kp PAGE_UP       &trans                &trans          &trans          &trans        &trans     &trans  &trans
-&trans  &trans  &trans               &kp LS(PAGE_DOWN)  &kp LEFT_CONTROL  &trans                &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT  &trans  &trans
+&trans  &trans  &kp LC(RIGhm_ARROW)  &trans             &kp PAGE_UP       &trans                &trans          &trans          &trans        &trans     &trans  &trans
+&trans  &trans  &trans               &kp LS(PAGE_DOWN)  &kp LEFT_CONTROL  &trans                &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGhm  &trans  &trans
 &trans  &trans  &kp DELETE           &trans             &trans            &kp LC(LEFT_ARROW)    &trans          &trans          &trans        &trans     &trans  &trans
                                      &trans             &trans            &trans                &trans          &kp BACKSPACE   &trans
             >;
@@ -73,8 +73,8 @@ hm: homerow_mods {
         layer_4 {
             bindings = <
 &kp F11     &kp F7        &kp F5             &kp F3           &kp F1                &kp F9                  &kp F8    &kp F10          &kp F2            &kp F4     &kp F6  &kp F12
-&trans      &kp K_MUTE    &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &trans    &kp PRINTSCREEN  &kp K_CALCULATOR  &trans     &trans  &trans
-&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1       &bt BT_SEL 2     &bt BT_SEL 3          &bt BT_SEL 4            &kp LEFT  &kp DOWN         &kp UP            &kp RIGHT  &trans  &trans
+&trans      &kp K_MUTE    &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp C_BRIGhmNESS_DEC  &kp C_BRIGhmNESS_INC    &trans    &kp PRINTSCREEN  &kp K_CALCULATOR  &trans     &trans  &trans
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1       &bt BT_SEL 2     &bt BT_SEL 3          &bt BT_SEL 4            &kp LEFT  &kp DOWN         &kp UP            &kp RIGhm  &trans  &trans
                                              &mo 3            &trans                &trans                  &trans    &trans           &trans
             >;
         };
