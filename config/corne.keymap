@@ -11,11 +11,6 @@
 / {
     combos {
         compatible = "zmk,combos";
-
-        raise_layer {
-            bindings = <&mo 2>;
-            key-positions = <40 37>;
-        };
     };
 
     behaviors {
@@ -41,7 +36,7 @@
 &kp TAB    &kp Q  &kp W       &kp E               &kp R           &kp T        &kp Y    &kp U               &kp I           &kp O           &kp P       &kp BSPC
 &kp ESC    &kp A  &mt LGUI S  &mt LA(LEFT_ALT) D  &mt LCTRL F     &kp G        &kp H    &mt LEFT_CONTROL J  &mt LEFT_ALT K  &mt LEFT_GUI L  &lt 3 SEMI  &kp SQT
 &kp LSHFT  &kp Z  &kp X       &kp C               &kp V           &kp B        &kp N    &kp M               &kp COMMA       &kp DOT         &kp FSLH    &kp ESC
-                              &kp LGUI            &kp LEFT_SHIFT  &kp SPACE    &kp RET  &mo 1               &kp BACKSPACE
+                              &mo 1               &kp LEFT_SHIFT  &kp SPACE    &kp RET  &kp BACKSPACE       &mo 2
             >;
         };
 
@@ -56,7 +51,7 @@
 &kp TAB     &kp N1        &kp N2        &kp N3        &kp N4          &kp N5          &kp N6    &kp N7    &kp N8    &kp N9     &kp N0  &kp BSPC
 &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3    &bt BT_SEL 4    &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT  &trans  &trans
 &kp LSHFT   &trans        &trans        &trans        &trans          &trans          &trans    &trans    &trans    &trans     &trans  &trans
-                                        &kp LGUI      &kp LEFT_SHIFT  &kp SPACE       &kp RET   &trans    &kp RALT
+                                        &mo 1         &kp LEFT_SHIFT  &kp SPACE       &kp RET   &trans    &kp RALT
             >;
         };
 
