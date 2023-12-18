@@ -15,6 +15,7 @@
         delete {
             bindings = <&kp DEL>;
             key-positions = <40 37>;
+            layers = <0>;
         };
     };
 
@@ -53,9 +54,9 @@
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
 
             bindings = <
-&kp TAB  &kp Q  &kp W        &kp SEMI                &kp P           &kp Y        &kp F    &kp G                &kp C            &kp R            &kp L       &trans
-&kp ESC  &kp A  &hml LGUI O  &hml LA(LEFT_ALT) E  &hml LCTRL I    &kp U        &kp D    &hmr LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &lt 2 S  &kp SQT
-&trans   &kp Z  &kp X        &kp J                &kp K           &kp V        &kp B    &kp M                &kp COMMA        &kp DOT          &kp FSLH    &trans
+&kp TAB  &kp Q  &kp W        &kp SEMI             &kp P           &kp Y        &kp F    &kp G                &kp C            &kp R            &kp L     &trans
+&kp ESC  &kp A  &hml LGUI O  &hml LA(LEFT_ALT) E  &hml LCTRL I    &kp U        &kp D    &hmr LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &lt 2 S   &kp SQT
+&trans   &kp Z  &kp X        &kp J                &kp K           &kp V        &kp B    &kp M                &kp COMMA        &kp DOT          &kp FSLH  &trans
                              &mo 3                &kp LEFT_SHIFT  &kp SPACE    &kp RET  &kp BACKSPACE        &mo 1
             >;
         };
@@ -71,7 +72,7 @@
 &kp TAB     &kp AMPS   &kp PRCNT         &kp HASH              &kp EXCL             &kp GRAVE    &kp TILDE  &kp KP_MULTIPLY       &kp AT                  &kp DLLR                &kp CARET     &kp PIPE
 &kp ESCAPE  &kp N7     &hml LEFT_GUI N5  &hml LEFT_ALT N3      &hml LCTRL NUMBER_1  &kp N9       &kp N8     &hmr LEFT_CONTROL N0  &hmr LEFT_ALT NUMBER_2  &hmr LEFT_GUI NUMBER_4  &kp NUMBER_6  &kp BSLH
 &trans      &kp MINUS  &kp UNDER         &kp LEFT_PARENTHESIS  &kp LEFT_BRACKET     &kp LBRC     &kp RBRC   &kp RIGHT_BRACKET     &kp RPAR                &kp EQUAL               &kp PLUS      &trans
-                                         &mo 1                 &kp LEFT_SHIFT       &kp SPACE    &kp RET    &kp BACKSPACE         &mo 0
+                                         &mo 3                 &kp LEFT_SHIFT       &kp SPACE    &kp RET    &kp BACKSPACE         &mo 1
             >;
         };
 
