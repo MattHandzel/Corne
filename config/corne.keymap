@@ -33,8 +33,8 @@
 
     keymap {
         compatible = "zmk,keymap";
-
         default_layer {
+
             // -----------------------------------------------------------------------------------------
             // |  TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BKSP |
             // | CTRL |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
@@ -66,7 +66,7 @@
 
         layer_3 {
             bindings = <
-&trans  &trans  &kp LC(RIGhm_ARROW)  &trans             &kp PAGE_UP       &trans                &trans          &trans          &trans        &trans     &trans  &trans
+&trans  &trans  &kp LC(RIGHT_ARROW)  &trans             &kp PAGE_UP       &trans                &trans          &trans          &trans        &trans     &trans  &trans
 &trans  &trans  &trans               &kp LS(PAGE_DOWN)  &kp LEFT_CONTROL  &trans                &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT  &trans  &trans
 &trans  &trans  &kp DELETE           &trans             &trans            &kp LC(LEFT_ARROW)    &trans          &trans          &trans        &trans     &trans  &trans
                                      &trans             &trans            &trans                &trans          &kp BACKSPACE   &trans
