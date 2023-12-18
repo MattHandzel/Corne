@@ -32,13 +32,12 @@
 
         hmr: hmr {
             compatible = "zmk,behavior-hold-tap";
-            label = "HMR";
-            bindings = <&none>, <&none>;
-
             #binding-cells = <2>;
-            hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38>;
             tapping-term-ms = <200>;
+            quick-tap-ms = <0>;
             flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38>;
         };
     };
 
@@ -54,7 +53,7 @@
 
             bindings = <
 &kp TAB  &kp Q  &kp W        &kp E                &kp R           &kp T        &kp Y    &kp U                &kp I            &kp O            &kp P       &trans
-&kp ESC  &kp A  &hml LGUI S  &hml LA(LEFT_ALT) D  &hml LCTRL F    &kp G        &kp H    &hml LEFT_CONTROL J  &hml LEFT_ALT K  &hml LEFT_GUI L  &lt 2 SEMI  &kp SQT
+&kp ESC  &kp A  &hml LGUI S  &hml LA(LEFT_ALT) D  &hml LCTRL F    &kp G        &kp H    &hmr LEFT_CONTROL J  &hmr LEFT_ALT K  &hmr LEFT_GUI L  &lt 2 SEMI  &kp SQT
 &trans   &kp Z  &kp X        &kp C                &kp V           &kp B        &kp N    &kp M                &kp COMMA        &kp DOT          &kp FSLH    &trans
                              &mo 3                &kp LEFT_SHIFT  &kp SPACE    &kp RET  &kp BACKSPACE        &mo 1
             >;
@@ -69,7 +68,7 @@
 
             bindings = <
 &kp TAB     &kp AMPS   &kp PRCNT         &kp HASH              &kp EXCL             &kp GRAVE    &kp TILDE  &kp KP_MULTIPLY       &kp AT                  &kp DLLR                &kp CARET     &kp PIPE
-&kp ESCAPE  &kp N7     &hml LEFT_GUI N5  &hml LEFT_ALT N3      &hml LCTRL NUMBER_1  &kp N9       &kp N8     &hml LEFT_CONTROL N0  &hml LEFT_ALT NUMBER_2  &hml LEFT_GUI NUMBER_4  &kp NUMBER_6  &kp BSLH
+&kp ESCAPE  &kp N7     &hml LEFT_GUI N5  &hml LEFT_ALT N3      &hml LCTRL NUMBER_1  &kp N9       &kp N8     &hmr LEFT_CONTROL N0  &hmr LEFT_ALT NUMBER_2  &hmr LEFT_GUI NUMBER_4  &kp NUMBER_6  &kp BSLH
 &trans      &kp MINUS  &kp UNDER         &kp LEFT_PARENTHESIS  &kp LEFT_BRACKET     &kp LBRC     &kp RBRC   &kp RIGHT_BRACKET     &kp RPAR                &kp EQUAL               &kp PLUS      &trans
                                          &mo 1                 &kp LEFT_SHIFT       &kp SPACE    &kp RET    &kp BACKSPACE         &mo 0
             >;
