@@ -57,7 +57,7 @@
             bindings = <
 &kp TAB     &kp AMPS   &kp PRCNT        &kp HASH              &kp EXCL            &kp GRAVE    &kp TILDE  &kp KP_MULTIPLY      &kp AT                 &kp DLLR               &kp CARET     &kp PIPE
 &kp ESCAPE  &kp N7     &hm LEFT_GUI N5  &hm LEFT_ALT N3       &hm LCTRL NUMBER_1  &kp N9       &kp N8     &hm LEFT_CONTROL N0  &hm LEFT_ALT NUMBER_2  &hm LEFT_GUI NUMBER_4  &kp NUMBER_6  &kp BSLH
-&trans      &kp MINUS  &kp UNDER        &kp LEFT_PARENTHESIS  &kp LEFT_BRACKET    &kp LBRC     &kp RBRC   &kp RIGhm_BRACKET    &kp RIGhm_PARENTHESIS  &kp EQUAL              &kp PLUS      &trans
+&trans      &kp MINUS  &kp UNDER        &kp LEFT_PARENTHESIS  &kp LEFT_BRACKET    &kp LBRC     &kp RBRC   &kp RIGHT_BRACKET    &kp RPAR               &kp EQUAL              &kp PLUS      &trans
                                         &mo 1                 &kp LEFT_SHIFT      &kp SPACE    &kp RET    &kp BACKSPACE        &mo 0
             >;
         };
@@ -65,7 +65,7 @@
         layer_3 {
             bindings = <
 &trans  &trans  &kp LC(RIGhm_ARROW)  &trans             &kp PAGE_UP       &trans                &trans          &trans          &trans        &trans     &trans  &trans
-&trans  &trans  &trans               &kp LS(PAGE_DOWN)  &kp LEFT_CONTROL  &trans                &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGhm  &trans  &trans
+&trans  &trans  &trans               &kp LS(PAGE_DOWN)  &kp LEFT_CONTROL  &trans                &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT  &trans  &trans
 &trans  &trans  &kp DELETE           &trans             &trans            &kp LC(LEFT_ARROW)    &trans          &trans          &trans        &trans     &trans  &trans
                                      &trans             &trans            &trans                &trans          &kp BACKSPACE   &trans
             >;
@@ -75,7 +75,7 @@
             bindings = <
 &kp F11     &kp F7        &kp F5             &kp F3           &kp F1                &kp F9                  &kp F8    &kp F10          &kp F2            &kp F4     &kp F6  &kp F12
 &trans      &kp K_MUTE    &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &trans    &kp PRINTSCREEN  &kp K_CALCULATOR  &trans     &trans  &trans
-&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1       &bt BT_SEL 2     &bt BT_SEL 3          &bt BT_SEL 4            &kp LEFT  &kp DOWN         &kp UP            &kp RIGhm  &trans  &trans
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1       &bt BT_SEL 2     &bt BT_SEL 3          &bt BT_SEL 4            &kp LEFT  &kp DOWN         &kp UP            &kp RIGHT  &trans  &trans
                                              &mo 3            &trans                &trans                  &trans    &trans           &trans
             >;
         };
