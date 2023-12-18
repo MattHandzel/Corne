@@ -23,7 +23,7 @@
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             tapping-term-ms = <200>;
-            quick-tap-ms = <0>;
+            quick-tap-ms = <150>;
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
 
@@ -34,9 +34,10 @@
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             tapping-term-ms = <200>;
-            quick-tap-ms = <0>;
+            quick-tap-ms = <150>;
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
+
             hold-trigger-key-positions = <0 1 2 3 4 5 12 13 14 15 16 17 24 25 26 27 28 29 36 37 38>;
         };
     };
@@ -79,18 +80,17 @@
 &trans  &trans  &kp LC(RIGHT_ARROW)  &trans             &kp PAGE_UP       &trans                &trans          &trans          &trans        &trans     &trans  &trans
 &trans  &trans  &trans               &kp LS(PAGE_DOWN)  &kp LEFT_CONTROL  &trans                &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT  &trans  &trans
 &trans  &trans  &kp DELETE           &trans             &trans            &kp LC(LEFT_ARROW)    &trans          &trans          &trans        &trans     &trans  &trans
-                                     &trans             &trans            &trans                &trans       &kp BACKSPACE   &trans
+                                     &trans             &trans            &trans                &trans          &kp BACKSPACE   &trans
             >;
         };
 
         layer_4 {
             bindings = <
-&kp F11     &kp F7        &kp F5             &kp F3           &kp F1                &kp F9                  &kp F8    &kp F10          &kp F2            &kp F4     &kp F6  &kp F12
-&trans      &kp K_MUTE    &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &trans    &kp PRINTSCREEN  &kp K_CALCULATOR  &trans     &trans  &trans
-&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1       &bt BT_SEL 2     &bt BT_SEL 3          &bt BT_SEL 4            &kp LEFT  &kp DOWN         &kp UP            &kp RIGHT  &trans  &trans
-                                             &mo 3            &trans                &trans                  &trans    &trans           &trans
+&kp F11     &kp F7        &kp F5             &kp F3           &kp F1                &kp F9                  &kp F8     &kp F10          &kp F2            &kp F4     &kp F6  &kp F12
+&trans      &kp K_MUTE    &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &trans     &kp PRINTSCREEN  &kp K_CALCULATOR  &trans     &trans  &trans
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1       &bt BT_SEL 2     &bt BT_SEL 3          &bt BT_SEL 4            &kp LEFT   &kp DOWN         &kp UP            &kp RIGHT  &trans  &trans
+                                             &mo 3            &trans                &trans                  &mkp LCLK  &trans           &trans
             >;
         };
-
     };
 };
