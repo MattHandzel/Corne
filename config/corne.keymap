@@ -50,6 +50,15 @@
 
             tapping-term-ms = <250>;
         };
+
+        caps: caps {
+            compatible = "zmk,behavior-tap-dance";
+            label = "CAPS";
+            #binding-cells = <0>;
+            bindings = <&kp LEFT_SHIFT>, <&kp CAPSLOCK>;
+
+            tapping-term-ms = <250>;
+        };
     };
 
     macros {
@@ -75,7 +84,7 @@
 &kp TAB  &kp SEMI  &kp COMMA    &kp DOT               &kp P          &kp Y        &kp F        &kp G                &kp C            &kp R            &kp L    &trans
 &kp ESC  &kp A     &hml LGUI O  &hml LA(LEFT_ALT) E   &hml LCTRL I   &kp U        &kp D        &hmr LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &lt 2 S  &trans
 &mo 4    &kp SQT   &qu          &kp J                 &kp K          &kp X        &kp B        &kp M                &kp W            &kp V            &kp Z    &trans
-                                &system_layer_toggle  &kp BACKSPACE  &kp ENTER    &key_repeat  &kp SPACE            &kp LEFT_SHIFT
+                                &system_layer_toggle  &kp BACKSPACE  &kp ENTER    &key_repeat  &kp SPACE            &caps
             >;
         };
 
@@ -90,7 +99,7 @@
 &kp TAB     &trans  &trans            &kp LBKT              &kp LPAR             &kp GRAVE    &kp APOS     &kp RPAR              &kp RIGHT_BRACKET       &trans                  &trans        &trans
 &kp ESCAPE  &kp N7  &hml LEFT_GUI N5  &hml LEFT_ALT N3      &hml LCTRL NUMBER_1  &kp N9       &kp N8       &hmr LEFT_CONTROL N0  &hmr LEFT_ALT NUMBER_2  &hmr LEFT_GUI NUMBER_4  &kp NUMBER_6  &trans
 &trans      &trans  &kp MINUS         &kp LS(UNDER)         &kp ESC              &kp TAB      &kp BSLH     &kp FSLH              &kp EQUAL               &kp LS(PLUS)            &trans        &trans
-                                      &system_layer_toggle  &kp BACKSPACE        &kp ENTER    &key_repeat  &kp SPACE             &kp LEFT_SHIFT
+                                      &system_layer_toggle  &kp BACKSPACE        &kp ENTER    &key_repeat  &kp SPACE             &caps
             >;
         };
 
