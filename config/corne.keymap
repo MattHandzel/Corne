@@ -46,9 +46,9 @@
             compatible = "zmk,behavior-tap-dance";
             label = "SYSTEM_LAYER_TOGGLE";
             #binding-cells = <0>;
-            bindings = <&mo 1>, <&tog 3>;
+            bindings = <&mo 1>, <&mo 3>;
 
-            tapping-term-ms = <300>;
+            tapping-term-ms = <250>;
         };
     };
 
