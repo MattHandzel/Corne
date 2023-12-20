@@ -69,9 +69,9 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&kp TAB     &kp MINUS  &kp UNDER         &kp LBKT          &kp LPAR             &kp GRAVE    &kp RBRC  &kp RPAR              &kp RIGHT_BRACKET       &kp EQUAL               &kp PLUS      &kp PIPE
+&kp TAB     &kp MINUS  &kp UNDER         &kp LBKT          &kp LPAR             &kp GRAVE    &kp FSLH  &kp RPAR              &kp RIGHT_BRACKET       &kp EQUAL               &kp PLUS      &kp PIPE
 &kp ESCAPE  &kp N7     &hml LEFT_GUI N5  &hml LEFT_ALT N3  &hml LCTRL NUMBER_1  &kp N9       &kp N8    &hmr LEFT_CONTROL N0  &hmr LEFT_ALT NUMBER_2  &hmr LEFT_GUI NUMBER_4  &kp NUMBER_6  &kp BSLH
-&trans      &trans     &kp MINUS         &kp LS(UNDER)     &kp ESC              &kp TAB      &trans    &trans                &kp EQUAL               &kp LS(PLUS)            &kp EQUAL     &trans
+&trans      &trans     &kp MINUS         &kp LS(UNDER)     &kp ESC              &kp TAB      &kp BSLH  &trans                &kp EQUAL               &kp LS(PLUS)            &kp EQUAL     &trans
                                          &mo 3             &kp LEFT_SHIFT       &kp SPACE    &kp RET   &kp BACKSPACE         &mo 1
             >;
         };
