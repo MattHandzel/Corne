@@ -16,6 +16,7 @@
             bindings = <&kp DEL>;
             key-positions = <37 41>;
             layers = <0>;
+            timeout-ms = <100>;
         };
     };
 
