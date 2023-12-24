@@ -18,6 +18,13 @@
             layers = <0>;
             timeout-ms = <9999>;
         };
+
+        because_macro {
+            bindings = <&because_chord>;
+            key-positions = <30 13 14 17 22 9>;
+            layers = <0>;
+            timeout-ms = <9999>;
+        };
     };
 
     behaviors {
@@ -69,6 +76,13 @@
             bindings = <&kp Q &kp U>;
             label = "QU";
         };
+
+        because_chord: because_chord {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp B &kp E &kp C &kp A &kp U &kp S &kp E>;
+            label = "BECAUSE_CHORD";
+        };
     };
 
     keymap {
@@ -97,37 +111,37 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&kp TAB     &none  &none            &kp LBKT              &kp LPAR             &kp GRAVE    &kp APOS     &kp RPAR              &kp RIGHT_BRACKET       &none                  &none        &none
-&kp ESCAPE  &kp N7  &hml LEFT_GUI N5  &hml LEFT_ALT N3      &hml LCTRL NUMBER_1  &kp N9       &kp N8       &hmr LEFT_CONTROL N0  &hmr LEFT_ALT NUMBER_2  &hmr LEFT_GUI NUMBER_4  &kp NUMBER_6  &none
-&none      &none  &kp MINUS         &kp LS(UNDER)         &kp ESC              &kp TAB      &kp BSLH     &kp FSLH              &kp EQUAL               &kp LS(PLUS)            &none        &none
-                              &trans     &trans     &trans    &trans  &trans  &trans
+&kp TAB     &none   &none             &kp LBKT          &kp LPAR             &kp GRAVE    &kp APOS  &kp RPAR              &kp RIGHT_BRACKET       &none                   &none         &none
+&kp ESCAPE  &kp N7  &hml LEFT_GUI N5  &hml LEFT_ALT N3  &hml LCTRL NUMBER_1  &kp N9       &kp N8    &hmr LEFT_CONTROL N0  &hmr LEFT_ALT NUMBER_2  &hmr LEFT_GUI NUMBER_4  &kp NUMBER_6  &none
+&none       &none   &kp MINUS         &kp LS(UNDER)     &kp ESC              &kp TAB      &kp BSLH  &kp FSLH              &kp EQUAL               &kp LS(PLUS)            &none         &none
+                                      &trans            &trans               &trans       &trans    &trans                &trans
             >;
         };
 
         layer_3 {
             bindings = <
-&none  &none  &kp LC(RIGHT_ARROW)  &none             &kp PAGE_UP       &none                &none          &none          &none        &none     &none  &none
-&none  &none  &none               &kp LS(PAGE_DOWN)  &kp LEFT_CONTROL  &none                &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT  &none  &none
-&none  &none  &kp DELETE           &none             &none            &kp LC(LEFT_ARROW)    &none          &none          &none        &none     &none  &none
-                              &trans     &trans     &trans    &trans  &trans  &trans
+&none  &none  &kp LC(RIGHT_ARROW)  &none              &kp PAGE_UP       &none                 &none           &none           &none         &none      &none  &none
+&none  &none  &none                &kp LS(PAGE_DOWN)  &kp LEFT_CONTROL  &none                 &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT  &none  &none
+&none  &none  &kp DELETE           &none              &none             &kp LC(LEFT_ARROW)    &none           &none           &none         &none      &none  &none
+                                   &trans             &trans            &trans                &trans          &trans          &trans
             >;
         };
 
         system_layer {
             bindings = <
-&kp F11     &kp F7        &kp F5             &kp F3                &kp F1                &kp F9                  &kp F8    &kp F10                        &kp F2            &kp F4     &kp F6  &kp F12
-&trans      &kp K_MUTE    &kp C_VOLUME_DOWN  &kp C_VOLUME_UP       &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &trans    &hmr LEFT_CONTROL PRINTSCREEN  &kp K_CALCULATOR  &trans     &trans  &trans
-&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1       &bt BT_SEL 2          &bt BT_SEL 3          &bt BT_SEL 4            &kp LEFT  &kp DOWN                       &kp UP            &kp RIGHT  &trans  &trans
-                              &trans     &trans     &trans    &trans  &trans  &trans
+&kp F11     &kp F7        &kp F5             &kp F3           &kp F1                &kp F9                  &kp F8    &kp F10                        &kp F2            &kp F4     &kp F6  &kp F12
+&trans      &kp K_MUTE    &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &trans    &hmr LEFT_CONTROL PRINTSCREEN  &kp K_CALCULATOR  &trans     &trans  &trans
+&bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1       &bt BT_SEL 2     &bt BT_SEL 3          &bt BT_SEL 4            &kp LEFT  &kp DOWN                       &kp UP            &kp RIGHT  &trans  &trans
+                                             &trans           &trans                &trans                  &trans    &trans                         &trans
             >;
         };
 
         left_and_mouse_layer {
             bindings = <
-&none  &none     &none     &none     &none     &none    &none  &none  &none  &none  &none  &none
-&none  &kp LC(A)  &none     &none     &kp LC(A)  &none    &none  &none  &none  &none  &none  &none
-&none  &kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &none    &none  &none  &none  &none  &none  &none
-                              &trans     &trans     &trans    &trans  &trans  &trans
+&none  &none      &none      &none      &none      &none     &none   &none   &none   &none  &none  &none
+&none  &kp LC(A)  &none      &none      &kp LC(A)  &none     &none   &none   &none   &none  &none  &none
+&none  &kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &none     &none   &none   &none   &none  &none  &none
+                             &trans     &trans     &trans    &trans  &trans  &trans
             >;
         };
     };
