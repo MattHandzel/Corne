@@ -17,6 +17,7 @@
             key-positions = <37 41>;
             layers = <0>;
             timeout-ms = <9999>;
+            slow-release;
         };
 
         because_macro {
@@ -25,6 +26,14 @@
             layers = <0>;
             timeout-ms = <9999>;
         };
+
+        control_backspace {
+            bindings = <&kp LC(BACKSPACE)>;
+            key-positions = <37 16>;
+            slow-release;
+            timeout-ms = <200>;
+            layers = <0 1 2 4>;
+        };
     };
 
     behaviors {
@@ -32,7 +41,6 @@
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             tapping-term-ms = <150>;
-            quick-tap-ms = <100>;
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
 
@@ -43,7 +51,6 @@
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             tapping-term-ms = <150>;
-            quick-tap-ms = <100>;
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
 
