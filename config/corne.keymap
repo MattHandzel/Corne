@@ -32,7 +32,7 @@
             key-positions = <37 16>;
             slow-release;
             timeout-ms = <200>;
-            layers = <0 1 2 4>;
+            layers = <0 2 3 5>;
         };
     };
 
@@ -57,7 +57,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "SYSTEM_LAYER_TOGGLE";
             #binding-cells = <0>;
-            bindings = <&mo 1>, <&mo 3>;
+            bindings = <&mo 2>, <&mo 4>;
 
             tapping-term-ms = <250>;
         };
@@ -86,6 +86,13 @@
             bindings = <&kp B &kp E &kp C &kp A &kp U &kp S &kp E>;
             label = "BECAUSE_CHORD";
         };
+
+        capital_qu: capital_qu {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(Q) &kp U>;
+            label = "CAPITAL_QU";
+        };
     };
 
     keymap {
@@ -100,9 +107,18 @@
 
             bindings = <
 &kp TAB  &kp SEMI  &kp COMMA    &kp DOT               &kp P          &kp Y        &kp F        &kp G                &kp C            &kp R            &kp L    &trans
-&kp ESC  &kp A     &hml LGUI O  &hml LA(LEFT_ALT) E   &hml LCTRL I   &kp U        &kp D        &hmr LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &lt 2 S  &trans
-&mo 4    &kp SQT   &qu          &kp J                 &kp K          &kp X        &kp B        &kp M                &kp W            &kp V            &kp Z    &trans
+&kp ESC  &kp A     &hml LGUI O  &hml LA(LEFT_ALT) E   &hml LCTRL I   &kp U        &kp D        &hmr LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &lt 3 S  &trans
+&mo 5    &kp SQT   &qu          &kp J                 &kp K          &kp X        &kp B        &kp M                &kp W            &kp V            &kp Z    &trans
                                 &system_layer_toggle  &kp BACKSPACE  &kp ENTER    &key_repeat  &kp SPACE            &caps
+            >;
+        };
+
+        shift_main_layer {
+            bindings = <
+&trans  &kp LS(COLON)  &kp LS(LT)   &kp LS(GT)            &kp LS(P)   &kp LS(Y)      &kp LS(F)    &kp LS(G)  &kp LS(C)  &kp LS(R)  &kp LS(L)  &trans
+&trans  &kp LS(A)      &kp LS(O)    &kp LS(E)             &kp LS(I)   &kp LS(U)      &kp LS(D)    &kp LS(H)  &kp LS(T)  &kp LS(N)  &kp LS(S)  &trans
+&trans  &kp LS(DQT)    &capital_qu  &kp LS(J)             &kp LS(K)   &kp LS(X)      &kp LS(B)    &kp LS(M)  &kp LS(W)  &kp LS(V)  &kp LS(Z)  &trans
+                                    &system_layer_toggle  &kp DELETE  &kp LS(RET)    &key_repeat  &kp SPACE  &trans
             >;
         };
 
