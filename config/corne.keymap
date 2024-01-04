@@ -18,6 +18,11 @@
             layers = <0>;
             timeout-ms = <9999>;
         };
+
+        becuase {
+            bindings = <&because_chord>;
+            key-positions = <20 19 15>;
+        };
     };
 
     behaviors {
