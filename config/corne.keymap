@@ -13,16 +13,31 @@
         compatible = "zmk,combos";
 
         because_macro {
-            bindings = <&because_chord>;
+            bindings = <&the_chord>;
             key-positions = <30 13 14 17 22 9>;
             layers = <0>;
             timeout-ms = <9999>;
         };
 
-        becuase {
-            bindings = <&because_chord>;
+        the {
+            bindings = <&the_chord>;
             key-positions = <20 19 15>;
             layers = <0>;
+        };
+
+        though {
+            bindings = <&though>;
+            key-positions = <20 19 14>;
+        };
+
+        because {
+            bindings = <&because>;
+            key-positions = <30 14 8>;
+        };
+
+        according {
+            bindings = <&according>;
+            key-positions = <13 14 8 9 18>;
         };
     };
 
@@ -79,11 +94,11 @@
             label = "QU";
         };
 
-        because_chord: because_chord {
+        the_chord: the_chord {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
-            bindings = <&kp B &kp E &kp C &kp A &kp U &kp S &kp E>;
-            label = "BECAUSE_CHORD";
+            bindings = <&kp T &kp H &kp E>;
+            label = "THE_CHORD";
             wait-ms = <1>;
             tap-ms = <1>;
         };
@@ -93,6 +108,51 @@
             #binding-cells = <0>;
             bindings = <&kp LS(Q) &kp U>;
             label = "CAPITAL_QU";
+        };
+
+        that: that {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp T &kp H &kp A &kp T>;
+            label = "THAT";
+            wait-ms = <1>;
+            tap-ms = <1>;
+        };
+
+        because: because {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp B &kp E &kp C &kp A &kp U &kp S &kp E>;
+            label = "BECAUSE";
+            wait-ms = <1>;
+            tap-ms = <1>;
+        };
+
+        which: which {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp W &kp H &kp I &kp C &kp H>;
+            label = "WHICH";
+            wait-ms = <1>;
+            tap-ms = <1>;
+        };
+
+        according: according {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp A &kp C &kp C &kp O &kp R &kp D &kp I &kp N &kp G>;
+            label = "ACCORDING";
+            wait-ms = <1>;
+            tap-ms = <1>;
+        };
+
+        though: though {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp T &kp H &kp O &kp U &kp G &kp H>;
+            label = "THOUGH";
+            wait-ms = <1>;
+            tap-ms = <1>;
         };
     };
 
