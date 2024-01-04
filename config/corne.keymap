@@ -12,27 +12,11 @@
     combos {
         compatible = "zmk,combos";
 
-        delete {
-            bindings = <&kp DEL>;
-            key-positions = <37 41>;
-            layers = <0>;
-            timeout-ms = <9999>;
-            slow-release;
-        };
-
         because_macro {
             bindings = <&because_chord>;
             key-positions = <30 13 14 17 22 9>;
             layers = <0>;
             timeout-ms = <9999>;
-        };
-
-        control_backspace {
-            bindings = <&kp LC(BACKSPACE)>;
-            key-positions = <37 16>;
-            slow-release;
-            timeout-ms = <200>;
-            layers = <0 2 4 6>;
         };
     };
 
