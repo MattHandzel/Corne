@@ -22,6 +22,7 @@
         becuase {
             bindings = <&because_chord>;
             key-positions = <20 19 15>;
+            layers = <0>;
         };
     };
 
@@ -83,8 +84,8 @@
             #binding-cells = <0>;
             bindings = <&kp B &kp E &kp C &kp A &kp U &kp S &kp E>;
             label = "BECAUSE_CHORD";
-            wait-ms = <0.1>;
-            tap-ms = <0.1>;
+            wait-ms = <1>;
+            tap-ms = <1>;
         };
 
         capital_qu: capital_qu {
