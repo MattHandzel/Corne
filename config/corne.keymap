@@ -57,7 +57,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "SYSTEM_LAYER_TOGGLE";
             #binding-cells = <0>;
-            bindings = <&mo 2>, <&mo 5>;
+            bindings = <&sl 2>, <&mo 5>;
 
             tapping-term-ms = <250>;
         };
@@ -66,9 +66,18 @@
             compatible = "zmk,behavior-tap-dance";
             label = "CAPS";
             #binding-cells = <0>;
-            bindings = <&sl 1>, <&kp CAPSLOCK>;
+            bindings = <&quick_release_sl 1>, <&kp CAPSLOCK>;
 
-            tapping-term-ms = <225>;
+            tapping-term-ms = <250>;
+        };
+
+        quick_release_sl: quick_release_sl {
+            compatible = "zmk,behavior-sticky-key";
+            label = "QUICK_RELEASE_SL";
+            bindings = <&mo>;
+            #binding-cells = <1>;
+            quick-release;
+            release-after-ms = <1000>;
         };
     };
 
@@ -109,7 +118,7 @@
 &kp TAB  &kp SEMI  &kp COMMA    &kp DOT               &kp P          &kp Y        &kp F        &kp G                &kp C            &kp R            &kp L    &trans
 &kp ESC  &kp A     &hml LGUI O  &hml LA(LEFT_ALT) E   &hml LCTRL I   &kp U        &kp D        &hmr LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &lt 4 S  &trans
 &mo 6    &kp SQT   &qu          &kp J                 &kp K          &kp X        &kp B        &kp M                &kp W            &kp V            &kp Z    &trans
-                                &system_layer_toggle  &kp BACKSPACE  &kp ENTER    &key_repeat  &kp SPACE            &mo 1
+                                &system_layer_toggle  &kp BACKSPACE  &kp ENTER    &key_repeat  &kp SPACE            &caps
             >;
         };
 
