@@ -150,7 +150,7 @@
             bindings = <
 &trans  &trans         &trans         &trans         &trans          &kp LS(TILDE)    &kp LS(DQT)   &trans               &trans      &trans        &trans         &trans
 &trans  &kp AMPERSAND  &kp LS(PRCNT)  &kp LS(POUND)  &kp LS(EXCL)    &trans           &kp LS(STAR)  &kp LS(QMARK)        &kp LS(AT)  &kp LS(DLLR)  &kp LS(CARET)  &trans
-&trans  &trans         &trans         &trans         &kp LEFT_BRACE  &trans           &trans        &kp LS(RIGHT_BRACE)  &none       &none         &trans         &trans
+&trans  &trans         &trans         &trans         &kp LEFT_BRACE  &trans           &trans        &kp LS(RIGHT_BRACE)  &kp PIPE    &none         &trans         &trans
                                       &trans         &trans          &trans           &trans        &trans               &trans
             >;
         };
