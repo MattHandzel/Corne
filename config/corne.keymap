@@ -28,16 +28,19 @@
         though {
             bindings = <&though>;
             key-positions = <20 19 14>;
+            layers = <0>;
         };
 
         because {
             bindings = <&because>;
             key-positions = <30 14 8>;
+            layers = <0>;
         };
 
         according {
             bindings = <&according>;
             key-positions = <13 14 8 9 18>;
+            layers = <0>;
         };
     };
 
