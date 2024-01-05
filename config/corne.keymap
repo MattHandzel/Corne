@@ -52,7 +52,7 @@
             flavor = "balanced";
             bindings = <&kp>, <&kp>;
 
-            hold-trigger-key-positions = <14 15 16>;
+            hold-trigger-key-positions = <19 20 21>;
         };
 
         hmr: hmr {
@@ -63,7 +63,7 @@
             bindings = <&kp>, <&kp>;
 
             require-prior-idle-ms = <0>;
-            hold-trigger-key-positions = <21 20 19>;
+            hold-trigger-key-positions = <14 15 16>;
         };
 
         system_layer_toggle: system_layer_toggle {
