@@ -33,7 +33,7 @@
 
         because {
             bindings = <&because>;
-            key-positions = <30 14 8>;
+            key-positions = <30 14>;
             layers = <0>;
         };
 
@@ -51,6 +51,8 @@
             tapping-term-ms = <150>;
             flavor = "balanced";
             bindings = <&kp>, <&kp>;
+
+            require-prior-idle-ms = <100>;
         };
 
         hmr: hmr {
@@ -59,6 +61,8 @@
             tapping-term-ms = <150>;
             flavor = "balanced";
             bindings = <&kp>, <&kp>;
+
+            require-prior-idle-ms = <100>;
         };
 
         system_layer_toggle: system_layer_toggle {
