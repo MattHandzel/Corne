@@ -176,7 +176,7 @@
 
             bindings = <
 &kp TAB  &kp SEMI  &kp COMMA    &kp DOT               &kp P          &kp Y        &kp F        &kp G                &kp C            &kp R            &kp L    &trans
-&kp ESC  &kp A     &hml LGUI O  &hml LA(LEFT_ALT) E   &hml LCTRL I   &kp U        &kp D        &hmr LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &lt 4 S  &trans
+&kp ESC  &kp A     &hml LGUI O  &hml LEFT_ALT E       &hml LCTRL I   &kp U        &kp D        &hmr LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &lt 4 S  &trans
 &mo 6    &kp SQT   &qu          &kp J                 &kp K          &kp X        &kp B        &kp M                &kp W            &kp V            &kp Z    &trans
                                 &system_layer_toggle  &kp BACKSPACE  &kp ENTER    &key_repeat  &kp SPACE            &caps
             >;
@@ -184,10 +184,10 @@
 
         shift_main_layer {
             bindings = <
-&trans  &kp LS(COLON)  &kp LS(LT)   &kp LS(GT)            &kp LS(P)   &kp LS(Y)      &kp LS(F)    &kp LS(G)  &kp LS(C)  &kp LS(R)  &kp LS(L)  &trans
-&trans  &kp LS(A)      &kp LS(O)    &kp LS(E)             &kp LS(I)   &kp LS(U)      &kp LS(D)    &kp LS(H)  &kp LS(T)  &kp LS(N)  &kp LS(S)  &trans
-&trans  &kp LS(DQT)    &capital_qu  &kp LS(J)             &kp LS(K)   &kp LS(X)      &kp LS(B)    &kp LS(M)  &kp LS(W)  &kp LS(V)  &kp LS(Z)  &trans
-                                    &system_layer_toggle  &kp DELETE  &kp LS(RET)    &key_repeat  &kp SPACE  &trans
+&trans  &kp LS(COLON)  &kp LS(LT)       &kp LS(GT)            &kp LS(P)                &kp LS(Y)      &kp LS(F)    &kp LS(G)                &kp LS(C)            &kp LS(R)            &kp LS(L)  &trans
+&trans  &kp LS(A)      &hml LGUI LS(O)  &hml LEFT_ALT LS(E)   &hml LEFT_CONTROL LS(I)  &kp LS(U)      &kp LS(D)    &hmr LEFT_CONTROL LS(H)  &hmr LEFT_ALT LS(T)  &hmr LEFT_GUI LS(N)  &kp LS(S)  &trans
+&trans  &kp LS(DQT)    &capital_qu      &kp LS(J)             &kp LS(K)                &kp LS(X)      &kp LS(B)    &kp LS(M)                &kp LS(W)            &kp LS(V)            &kp LS(Z)  &trans
+                                        &system_layer_toggle  &kp DELETE               &kp LS(RET)    &key_repeat  &kp SPACE                &trans
             >;
         };
 
@@ -208,10 +208,10 @@
 
         shift_lower {
             bindings = <
-&trans  &trans         &trans         &trans         &trans          &kp LS(TILDE)    &kp LS(DQT)   &trans               &trans      &trans        &trans         &trans
-&trans  &kp AMPERSAND  &kp LS(PRCNT)  &kp LS(POUND)  &kp LS(EXCL)    &trans           &kp LS(STAR)  &kp LS(QMARK)        &kp LS(AT)  &kp LS(DLLR)  &kp LS(CARET)  &trans
-&trans  &trans         &trans         &trans         &kp LEFT_BRACE  &trans           &trans        &kp LS(RIGHT_BRACE)  &kp PIPE    &none         &trans         &trans
-                                      &trans         &trans          &trans           &trans        &trans               &trans
+&trans  &trans         &trans                 &trans              &trans                         &kp LS(TILDE)    &kp LS(DQT)   &trans                      &trans                 &trans                &trans         &trans
+&trans  &kp AMPERSAND  &hml LEFT_GUI PERCENT  &hml LEFT_ALT HASH  &hml LEFT_CONTROL EXCLAMATION  &trans           &kp LS(STAR)  &hmr LEFT_CONTROL QUESTION  &hmr LEFT_ALT AT_SIGN  &hmr LEFT_GUI DOLLAR  &kp LS(CARET)  &trans
+&trans  &trans         &trans                 &trans              &kp LEFT_BRACE                 &trans           &trans        &kp LS(RIGHT_BRACE)         &kp PIPE               &none                 &trans         &trans
+                                              &trans              &trans                         &trans           &trans        &trans                      &trans
             >;
         };
 
