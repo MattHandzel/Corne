@@ -47,6 +47,16 @@
             bindings = <&kp LC(BACKSPACE)>;
             key-positions = <16 37>;
         };
+
+        esc {
+            bindings = <&kp ESCAPE>;
+            key-positions = <13 14>;
+        };
+
+        tab {
+            bindings = <&kp TAB>;
+            key-positions = <1 2>;
+        };
     };
 
     behaviors {
@@ -198,10 +208,10 @@
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
 
             bindings = <
-&kp TAB  &kp SEMI  &kp COMMA    &kp DOT               &kp P          &kp Y        &kp F        &kp G                &kp C            &kp R            &kp L    &trans
-&kp ESC  &kp A     &hml LGUI O  &hml LEFT_ALT E       &hml LCTRL I   &kp U        &kp D        &hmr LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &lt 4 S  &trans
-&mo 6    &kp SQT   &qu          &kp J                 &kp K          &kp X        &kp B        &kp M                &kp W            &kp V            &kp Z    &trans
-                                &system_layer_toggle  &kp BACKSPACE  &kp ENTER    &key_repeat  &kp SPACE            &caps
+&kp TAB       &kp SEMI  &kp COMMA    &kp DOT               &kp P          &kp Y        &kp F        &kp G                &kp C            &kp R            &kp L  &trans
+&lt 4 ESCAPE  &kp A     &hml LGUI O  &hml LEFT_ALT E       &hml LCTRL I   &kp U        &kp D        &hmr LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &kp S  &trans
+&mo 6         &kp SQT   &qu          &kp J                 &kp K          &kp X        &kp B        &kp M                &kp W            &kp V            &kp Z  &trans
+                                     &system_layer_toggle  &kp BACKSPACE  &kp ENTER    &key_repeat  &kp SPACE            &caps
             >;
         };
 
