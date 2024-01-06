@@ -171,6 +171,20 @@
             bindings = <&none>;
             label = "TURN_TO_CAPS_LAYER";
         };
+
+        shift: shift {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&none>;
+            label = "SHIFT";
+        };
+
+        vim_x: vim_x {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&none &kp X>;
+            label = "VIM_X";
+        };
     };
 
     keymap {
@@ -196,7 +210,7 @@
 &trans  &kp LS(COLON)  &kp LS(LT)       &kp LS(GT)            &kp LS(P)                &kp LS(Y)      &kp LS(F)    &kp LS(G)                &kp LS(C)            &kp LS(R)            &kp LS(L)  &trans
 &trans  &kp LS(A)      &hml LGUI LS(O)  &hml LEFT_ALT LS(E)   &hml LEFT_CONTROL LS(I)  &kp LS(U)      &kp LS(D)    &hmr LEFT_CONTROL LS(H)  &hmr LEFT_ALT LS(T)  &hmr LEFT_GUI LS(N)  &kp LS(S)  &trans
 &trans  &kp LS(DQT)    &capital_qu      &kp LS(J)             &kp LS(K)                &kp LS(X)      &kp LS(B)    &kp LS(M)                &kp LS(W)            &kp LS(V)            &kp LS(Z)  &trans
-                                        &system_layer_toggle  &kp DELETE               &kp LS(RET)    &key_repeat  &kp SPACE                &trans
+                                        &system_layer_toggle  &kp DELETE               &kp LS(RET)    &key_repeat  &kp SPACE                &kp LEFT_SHIFT
             >;
         };
 
@@ -211,7 +225,7 @@
 &kp TAB     &trans  &trans            &trans            &kp LPAR             &kp GRAVE    &kp APOS  &kp RPAR              &kp EQUAL               &kp PLUS                &none         &none
 &kp ESCAPE  &kp N7  &hml LEFT_GUI N5  &hml LEFT_ALT N3  &hml LCTRL NUMBER_1  &kp N9       &kp N8    &hmr LEFT_CONTROL N0  &hmr LEFT_ALT NUMBER_2  &hmr LEFT_GUI NUMBER_4  &kp NUMBER_6  &none
 &none       &none   &kp MINUS         &kp LS(UNDER)     &kp LEFT_BRACKET     &kp TAB      &kp BSLH  &kp RIGHT_BRACKET     &kp SLASH               &kp LS(PLUS)            &none         &none
-                                      &trans            &trans               &trans       &trans    &trans                &trans
+                                      &trans            &trans               &trans       &trans    &trans                &caps
             >;
         };
 
@@ -220,16 +234,16 @@
 &trans  &trans         &trans                 &trans              &trans                         &kp LS(TILDE)    &kp LS(DQT)   &trans                      &trans                 &trans                &trans         &trans
 &trans  &kp AMPERSAND  &hml LEFT_GUI PERCENT  &hml LEFT_ALT HASH  &hml LEFT_CONTROL EXCLAMATION  &trans           &kp LS(STAR)  &hmr LEFT_CONTROL QUESTION  &hmr LEFT_ALT AT_SIGN  &hmr LEFT_GUI DOLLAR  &kp LS(CARET)  &trans
 &trans  &trans         &trans                 &trans              &kp LEFT_BRACE                 &trans           &trans        &kp LS(RIGHT_BRACE)         &kp PIPE               &none                 &trans         &trans
-                                              &trans              &trans                         &trans           &trans        &trans                      &trans
+                                              &trans              &trans                         &trans           &trans        &trans                      &kp LEFT_SHIFT
             >;
         };
 
         vim_layer {
             bindings = <
-&none  &none  &kp LC(RIGHT_ARROW)  &none              &kp PAGE_UP       &none                 &none           &none           &none         &none      &none  &none
-&none  &none  &none                &kp LS(PAGE_DOWN)  &kp LEFT_CONTROL  &none                 &kp LEFT_ARROW  &kp DOWN_ARROW  &kp UP_ARROW  &kp RIGHT  &none  &none
-&none  &none  &kp Q                &none              &none             &kp LC(LEFT_ARROW)    &none           &none           &none         &none      &none  &none
-                                   &trans             &trans            &trans                &trans          &trans          &trans
+&none  &none  &kp LC(RIGHT_ARROW)  &none              &kp PAGE_UP       &none         &none   &none                         &none           &none  &kp RIGHT  &none
+&none  &none  &none                &kp LS(PAGE_DOWN)  &kp LEFT_CONTROL  &none         &none   &hmr LEFT_CONTROL LEFT_ARROW  &none           &none  &none      &none
+&none  &none  &kp Q                &kp DOWN_ARROW     &kp UP            &kp DELETE    &none   &none                         &none           &none  &none      &none
+                                   &trans             &trans            &trans        &trans  &trans                        &kp LEFT_SHIFT
             >;
         };
 
