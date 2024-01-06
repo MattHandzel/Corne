@@ -42,6 +42,11 @@
             key-positions = <13 14 8 9 18>;
             layers = <0>;
         };
+
+        control_delete {
+            bindings = <&kp LC(BACKSPACE)>;
+            key-positions = <16 37>;
+        };
     };
 
     behaviors {
@@ -76,7 +81,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "CAPS";
             #binding-cells = <0>;
-            bindings = <&quick_release_sl 1>, <&kp CAPSLOCK>;
+            bindings = <&quick_release_sl 1>, <&caps_word>;
 
             tapping-term-ms = <250>;
         };
@@ -158,6 +163,13 @@
             label = "THOUGH";
             wait-ms = <1>;
             tap-ms = <1>;
+        };
+
+        turn_to_caps_layer: turn_to_caps_layer {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&none>;
+            label = "TURN_TO_CAPS_LAYER";
         };
     };
 
