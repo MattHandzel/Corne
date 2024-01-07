@@ -297,8 +297,8 @@
         };
 
         excel_layer {
-            if-layers = <2>;
-            then-layer = <6>;
+            if-layers = <2 6>;
+            then-layer = <7>;
         };
     };
 };
