@@ -76,7 +76,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "SYSTEM_LAYER_TOGGLE";
             #binding-cells = <0>;
-            bindings = <&sl 2>, <&mo 5>;
+            bindings = <&sl 3>, <&mo 5>;
 
             tapping-term-ms = <250>;
         };
@@ -85,7 +85,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "CAPS";
             #binding-cells = <0>;
-            bindings = <&quick_release_sl 1>, <&caps_word>;
+            bindings = <&quick_release_sl 2>, <&caps_word>;
 
             tapping-term-ms = <250>;
         };
@@ -253,10 +253,10 @@
 
         system_layer {
             bindings = <
-&kp F11  &kp F7      &kp F5                &kp F3           &kp F1                &kp F9                  &kp F8        &kp F10                       &kp F2                     &kp F4        &kp F6        &kp F12
-&trans   &kp K_MUTE  &kp C_VOLUME_DOWN     &kp C_VOLUME_UP  &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &none         &mt LEFT_CONTROL PRINTSCREEN  &mt LEFT_ALT K_CALCULATOR  &none         &none         &bt BT_NXT
-&none    &none       &kp LC(K_CALCULATOR)  &kp PRINTSCREEN  &none                 &none                   &bt BT_SEL 4  &bt BT_SEL 3                  &bt BT_SEL 2               &bt BT_SEL 1  &bt BT_SEL 0  &bt BT_CLR
-                                           &trans           &trans                &trans                  &trans        &trans                        &kp LEFT_SHIFT
+&kp F11  &kp F7      &kp F5             &kp F3            &kp F1                &kp F9                  &kp F8        &kp F10                       &kp F2                     &kp F4        &kp F6        &kp F12
+&trans   &kp K_MUTE  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP   &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &none         &mt LEFT_CONTROL PRINTSCREEN  &mt LEFT_ALT K_CALCULATOR  &none         &none         &bt BT_NXT
+&none    &none       &none              &kp K_CALCULATOR  &kp PRINTSCREEN       &none                   &bt BT_SEL 4  &bt BT_SEL 3                  &bt BT_SEL 2               &bt BT_SEL 1  &bt BT_SEL 0  &bt BT_CLR
+                                        &trans            &trans                &trans                  &trans        &trans                        &kp LEFT_SHIFT
             >;
         };
 
@@ -292,12 +292,12 @@
         compatible = "zmk,conditional-layers";
 
         shift_lower {
-            if-layers = <1 2>;
+            if-layers = <2 3>;
             then-layer = <3>;
         };
 
         excel_layer {
-            if-layers = <2 6>;
+            if-layers = <3 6>;
             then-layer = <7>;
         };
     };
