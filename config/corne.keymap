@@ -12,13 +12,6 @@
     combos {
         compatible = "zmk,combos";
 
-        because_macro {
-            bindings = <&the_chord>;
-            key-positions = <30 13 14 17 22 9>;
-            layers = <0>;
-            timeout-ms = <9999>;
-        };
-
         the {
             bindings = <&the_chord>;
             key-positions = <20 19 15>;
@@ -251,7 +244,7 @@
         vim_layer {
             bindings = <
 &none  &none  &kp LC(RIGHT_ARROW)  &none              &kp PAGE_UP       &none         &none   &none                         &none           &none  &kp RIGHT  &none
-&none  &none  &none                &kp LS(PAGE_DOWN)  &kp LEFT_CONTROL  &none         &none   &hmr LEFT_CONTROL LEFT_ARROW  &none           &none  &none      &none
+&none  &none  &none                &kp LS(PAGE_DOWN)  &kp LEFT_CONTROL  &none         &none   &hmr LEFT_CONTROL LEFT_ARROW  &mmv MOVE_UP    &none  &none      &none
 &none  &none  &kp Q                &kp DOWN_ARROW     &kp UP            &kp DELETE    &none   &none                         &none           &none  &none      &none
                                    &trans             &trans            &trans        &trans  &trans                        &kp LEFT_SHIFT
             >;
@@ -262,7 +255,7 @@
 &kp F11     &kp F7        &kp F5             &kp F3           &kp F1                &kp F9                  &kp F8    &kp F10                       &kp F2                     &kp F4     &kp F6  &kp F12
 &trans      &kp K_MUTE    &kp C_VOLUME_DOWN  &kp C_VOLUME_UP  &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &trans    &mt LEFT_CONTROL PRINTSCREEN  &mt LEFT_ALT K_CALCULATOR  &trans     &trans  &trans
 &bt BT_CLR  &bt BT_SEL 0  &bt BT_SEL 1       &bt BT_SEL 2     &bt BT_SEL 3          &bt BT_SEL 4            &kp LEFT  &kp DOWN                      &kp UP                     &kp RIGHT  &trans  &trans
-                                             &trans           &trans                &trans                  &trans    &trans                        &trans
+                                             &trans           &trans                &trans                  &trans    &trans                        &kp LEFT_SHIFT
             >;
         };
 
