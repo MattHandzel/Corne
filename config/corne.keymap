@@ -254,7 +254,7 @@
         system_layer {
             bindings = <
 &kp F11  &kp F7      &kp F5                &kp F3           &kp F1                &kp F9                  &kp F8        &kp F10                       &kp F2                     &kp F4        &kp F6        &kp F12
-&trans   &kp K_MUTE  &kp C_VOLUME_DOWN     &kp C_VOLUME_UP  &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &trans        &mt LEFT_CONTROL PRINTSCREEN  &mt LEFT_ALT K_CALCULATOR  &trans        &trans        &bt BT_NXT
+&trans   &kp K_MUTE  &kp C_VOLUME_DOWN     &kp C_VOLUME_UP  &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &none         &mt LEFT_CONTROL PRINTSCREEN  &mt LEFT_ALT K_CALCULATOR  &none         &none         &bt BT_NXT
 &none    &none       &kp LC(K_CALCULATOR)  &kp PRINTSCREEN  &none                 &none                   &bt BT_SEL 4  &bt BT_SEL 3                  &bt BT_SEL 2               &bt BT_SEL 1  &bt BT_SEL 0  &bt BT_CLR
                                            &trans           &trans                &trans                  &trans        &trans                        &kp LEFT_SHIFT
             >;
@@ -262,27 +262,27 @@
 
         left_and_mouse_layer {
             bindings = <
-&none  &kp LC(Q)  &kp LC(W)  &none      &none      &none     &none   &none   &none   &none  &none  &none
-&none  &none      &none      &kp LC(T)  &kp LC(A)  &none     &none   &none   &none   &none  &none  &none
-&none  &kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &none     &none   &none   &none   &none  &none  &none
-                             &trans     &trans     &trans    &trans  &trans  &trans
+&none   &kp LC(Q)  &kp LC(W)  &none      &none      &none     &none   &none   &none   &none  &none  &none
+&none   &none      &none      &kp LC(T)  &kp LC(A)  &none     &none   &none   &none   &none  &none  &none
+&trans  &kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &none     &none   &none   &none   &none  &none  &none
+                              &trans     &trans     &trans    &trans  &trans  &trans
             >;
         };
 
         excel_layer {
             bindings = <
-&trans  &tog 8  &kp N7  &kp N8  &kp N9  &kp PLUS     &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &kp N4  &kp N5  &kp N6  &kp N0       &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &kp N1  &kp N2  &kp N3  &kp EQUAL    &trans  &trans  &trans  &trans  &trans  &trans
+&none   &tog 8  &kp N7  &kp N8  &kp N9  &kp PLUS     &none   &none   &none   &none  &none  &none
+&none   &none   &kp N4  &kp N5  &kp N6  &kp N0       &none   &none   &none   &none  &none  &none
+&trans  &none   &kp N1  &kp N2  &kp N3  &kp EQUAL    &none   &none   &none   &none  &none  &none
                         &trans  &trans  &trans       &trans  &trans  &trans
             >;
         };
 
         excel_layer_upper {
             bindings = <
-&trans  &trans  &kp HOME  &kp UP    &kp PG_UP  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &kp LEFT  &trans    &kp RIGHT  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &kp END   &kp DOWN  &kp PG_DN  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&none   &trans  &kp HOME  &kp UP    &kp PG_UP  &none     &none   &none   &none   &none  &none  &none
+&none   &none   &kp LEFT  &none     &kp RIGHT  &none     &none   &none   &none   &none  &none  &none
+&trans  &none   &kp END   &kp DOWN  &kp PG_DN  &none     &none   &none   &none   &none  &none  &none
                           &trans    &trans     &trans    &trans  &trans  &trans
             >;
         };
