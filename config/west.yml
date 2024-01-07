@@ -2,12 +2,16 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: okke-formsma
-      url-base: https://github.com/okke-formsma
+    - name: krikun98
+      url-base: https://github.com/krikun98
+    - name: ftc
+      url-base: https://github.com/ftc
+    - name: urob
+      url-base: https://github.com/urob
   projects:
     - name: zmk
-      remote: okke-formsma
-      revision: macros
+      remote: urob
+      revision: main
       import: app/west.yml
   self:
     path: config
