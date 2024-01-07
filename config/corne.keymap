@@ -280,7 +280,7 @@
 
         excel_layer_upper {
             bindings = <
-&none   &trans  &kp HOME  &kp UP    &kp PG_UP  &none     &none   &none   &none   &none  &none  &none
+&none   &tog 8  &kp HOME  &kp UP    &kp PG_UP  &none     &none   &none   &none   &none  &none  &none
 &none   &none   &kp LEFT  &none     &kp RIGHT  &none     &none   &none   &none   &none  &none  &none
 &trans  &none   &kp END   &kp DOWN  &kp PG_DN  &none     &none   &none   &none   &none  &none  &none
                           &trans    &trans     &trans    &trans  &trans  &trans
