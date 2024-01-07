@@ -226,10 +226,10 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&kp TAB     &trans  &trans            &trans            &kp LPAR             &kp GRAVE    &kp APOS  &kp RPAR              &kp EQUAL               &kp PLUS                &none         &none
-&kp ESCAPE  &kp N7  &hml LEFT_GUI N5  &hml LEFT_ALT N3  &hml LCTRL NUMBER_1  &kp N9       &kp N8    &hmr LEFT_CONTROL N0  &hmr LEFT_ALT NUMBER_2  &hmr LEFT_GUI NUMBER_4  &kp NUMBER_6  &none
-&none       &none   &kp MINUS         &kp LS(UNDER)     &kp LEFT_BRACKET     &kp TAB      &kp BSLH  &kp RIGHT_BRACKET     &kp SLASH               &kp LS(PLUS)            &none         &none
-                                      &trans            &trans               &trans       &trans    &trans                &caps
+&none  &trans  &trans            &trans            &kp LPAR             &kp GRAVE    &kp APOS  &kp RPAR              &kp EQUAL               &kp PLUS                &none         &none
+&none  &kp N7  &hml LEFT_GUI N5  &hml LEFT_ALT N3  &hml LCTRL NUMBER_1  &kp N9       &kp N8    &hmr LEFT_CONTROL N0  &hmr LEFT_ALT NUMBER_2  &hmr LEFT_GUI NUMBER_4  &kp NUMBER_6  &none
+&none  &none   &kp MINUS         &kp LS(UNDER)     &kp LEFT_BRACKET     &kp TAB      &kp BSLH  &kp RIGHT_BRACKET     &kp SLASH               &kp LS(PLUS)            &none         &none
+                                 &trans            &trans               &trans       &trans    &trans                &caps
             >;
         };
 
@@ -269,12 +269,21 @@
             >;
         };
 
-        excel_row {
+        excel_layer {
             bindings = <
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-&trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans  &trans  &trans  &trans  &trans
-                        &trans  &trans  &trans    &trans  &trans  &trans
+&trans  &tog 8  &kp N7  &kp N8  &kp N9  &kp PLUS     &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &kp N4  &kp N5  &kp N6  &kp N0       &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &kp N1  &kp N2  &kp N3  &kp EQUAL    &trans  &trans  &trans  &trans  &trans  &trans
+                        &trans  &trans  &trans       &trans  &trans  &trans
+            >;
+        };
+
+        excel_layer_upper {
+            bindings = <
+&trans  &trans  &kp HOME  &kp UP    &kp PG_UP  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &kp LEFT  &trans    &kp RIGHT  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+&trans  &trans  &kp END   &kp DOWN  &kp PG_DN  &trans    &trans  &trans  &trans  &trans  &trans  &trans
+                          &trans    &trans     &trans    &trans  &trans  &trans
             >;
         };
     };
@@ -285,6 +294,11 @@
         shift_lower {
             if-layers = <1 2>;
             then-layer = <3>;
+        };
+
+        excel_layer {
+            if-layers = <2>;
+            then-layer = <6>;
         };
     };
 };
