@@ -77,7 +77,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "SYSTEM_LAYER_TOGGLE";
             #binding-cells = <0>;
-            bindings = <&sl 2>, <&mo 5>;
+            bindings = <&sl 3>, <&mo 5>;
 
             tapping-term-ms = <250>;
         };
@@ -86,7 +86,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "CAPS";
             #binding-cells = <0>;
-            bindings = <&quick_release_sl 1>, <&caps_word>;
+            bindings = <&quick_release_sl 2>, <&caps_word>;
 
             tapping-term-ms = <250>;
         };
@@ -203,10 +203,10 @@
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
 
             bindings = <
-&none      &kp SEMI  &kp COMMA    &kp DOT               &kp P          &kp Y        &kp F        &kp G                &kp C            &kp R            &kp L  &trans
-&mkp LCLK  &lt 4 A   &hml LGUI O  &hml LEFT_ALT E       &hml LCTRL I   &kp U        &kp D        &hmr LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &kp S  &trans
-&mo 6      &kp SQT   &qu          &kp J                 &kp K          &kp X        &kp B        &kp M                &kp W            &kp V            &kp Z  &trans
-                                  &system_layer_toggle  &kp BACKSPACE  &kp ENTER    &key_repeat  &kp SPACE            &caps
+&none  &kp SEMI  &kp COMMA    &kp DOT               &kp P          &kp Y        &kp F        &kp G                &kp C            &kp R            &kp L  &trans
+&none  &lt 4 A   &hml LGUI O  &hml LEFT_ALT E       &hml LCTRL I   &kp U        &kp D        &hmr LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &kp S  &trans
+&mo 6  &kp SQT   &qu          &kp J                 &kp K          &kp X        &kp B        &kp M                &kp W            &kp V            &kp Z  &trans
+                              &system_layer_toggle  &kp BACKSPACE  &kp ENTER    &key_repeat  &kp SPACE            &caps
             >;
         };
 
@@ -263,10 +263,10 @@
 
         left_and_mouse_layer {
             bindings = <
-&none   &kp LC(Q)  &kp LC(W)  &none      &none      &none     &none   &none         &none   &none  &none  &none
-&none   &none      &none      &kp LC(T)  &kp LC(A)  &none     &none   &mmv MOVE_UP  &none   &none  &none  &none
-&trans  &kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &none     &none   &none         &none   &none  &none  &none
-                              &trans     &trans     &trans    &trans  &trans        &trans
+&none   &kp LC(Q)  &kp LC(W)  &none      &none      &none     &none   &none   &none   &none  &none  &none
+&none   &none      &none      &kp LC(T)  &kp LC(A)  &none     &none   &none   &none   &none  &none  &none
+&trans  &kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &none     &none   &none   &none   &none  &none  &none
+                              &trans     &trans     &trans    &trans  &trans  &trans
             >;
         };
 
@@ -293,7 +293,7 @@
         compatible = "zmk,conditional-layers";
 
         shift_lower {
-            if-layers = <2 3>;
+            if-layers = <3 3>;
             then-layer = <3>;
         };
 
