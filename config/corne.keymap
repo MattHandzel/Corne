@@ -85,7 +85,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "CAPS";
             #binding-cells = <0>;
-            bindings = <&quick_release_sl 2>, <&caps_word>;
+            bindings = <&quick_release_sl 1>, <&caps_word>;
 
             tapping-term-ms = <250>;
         };
@@ -246,7 +246,7 @@
             bindings = <
 &none  &kp K_POWER  &none     &none                          &kp PAGE_UP       &none          &none          &none                         &none           &none              &kp RIGHT  &none
 &none  &none        &kp LGUI  &hml LEFT_ALT LC(RIGHT_ARROW)  &kp LEFT_CONTROL  &kp PAGE_UP    &kp PAGE_DOWN  &hmr LEFT_CONTROL LEFT_ARROW  &kp LEFT_ALT    &hmr LEFT_GUI END  &kp HOME   &none
-&none  &none        &kp Q     &kp DOWN_ARROW                 &kp UP            &kp DELETE     &kp LC(B)      &none                         &none           &none              &none      &none
+&none  &none        &kp Q     &kp DOWN_ARROW                 &kp UP            &kp DELETE     &kp LC(LEFT)   &none                         &none           &none              &none      &none
                               &trans                         &trans            &trans         &trans         &trans                        &kp LEFT_SHIFT
             >;
         };
