@@ -77,7 +77,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "SYSTEM_LAYER_TOGGLE";
             #binding-cells = <0>;
-            bindings = <&sl 3>, <&mo 5>;
+            bindings = <&sl 2>, <&mo 5>;
 
             tapping-term-ms = <250>;
         };
@@ -86,7 +86,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "CAPS";
             #binding-cells = <0>;
-            bindings = <&quick_release_sl 2>, <&caps_word>;
+            bindings = <&quick_release_sl 1>, <&caps_word>;
 
             tapping-term-ms = <250>;
         };
@@ -293,12 +293,12 @@
         compatible = "zmk,conditional-layers";
 
         shift_lower {
-            if-layers = <3 3>;
+            if-layers = <2 1>;
             then-layer = <3>;
         };
 
         excel_layer {
-            if-layers = <3 6>;
+            if-layers = <6 2>;
             then-layer = <7>;
         };
     };
