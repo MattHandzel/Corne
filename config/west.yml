@@ -2,16 +2,12 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    - name: krikun98
-      url-base: https://github.com/krikun98
-    - name: ftc
-      url-base: https://github.com/ftc
-    - name: urob
-      url-base: https://github.com/urob
+    - name: mcrosson
+      url-base: https://github.com/mcrosson
   projects:
     - name: zmk
-      remote: urob
-      revision: main
+      remote: mcrosson
+      revision: feat-behavior-sleep
       import: app/west.yml
   self:
     path: config
