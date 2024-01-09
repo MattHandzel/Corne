@@ -266,9 +266,9 @@
 
         left_and_mouse_layer {
             bindings = <
-&none   &kp LC(Q)  &kp LC(W)  &none      &none      &none     &none   &none   &none   &none  &none  &none
-&none   &none      &none      &kp LC(T)  &kp LC(A)  &none     &none   &none   &none   &none  &none  &none
-&trans  &kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &none     &none   &none   &none   &none  &none  &none
+&none   &kp LC(Q)  &kp LC(W)  &none      &none      &none     &none   &none   &none         &none  &none  &none
+&none   &none      &none      &kp LC(T)  &kp LC(A)  &none     &none   &none   &mmv MOVE_UP  &none  &none  &none
+&trans  &kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &none     &none   &none   &none         &none  &none  &none
                               &trans     &trans     &trans    &trans  &trans  &trans
             >;
         };
