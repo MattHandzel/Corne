@@ -11,7 +11,7 @@
 #include <dt-bindings/zmk/keys.h>
 
 &mmv {
-    acceleration-exponent = <2>;
+    acceleration-exponent = <0.8>;
 };
 
 / {
