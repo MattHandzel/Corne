@@ -266,10 +266,10 @@
 
         left_and_mouse_layer {
             bindings = <
-&none   &kp LC(Q)  &kp LC(W)  &none      &none      &none     &none   &none   &none         &none  &none  &none
-&none   &none      &none      &kp LC(T)  &kp LC(A)  &none     &none   &none   &mmv MOVE_UP  &none  &none  &none
-&trans  &kp LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &none     &none   &none   &none         &none  &none  &none
-                              &trans     &trans     &trans    &trans  &trans  &trans
+&none   &kp LC(Q)  &kp LC(W)  &kp LC(T)       &kp LCTRL                &none        &none      &none           &none   &none  &mmv MOVE_RIGHT  &none
+&none   &none      &kp LC(A)  &kp LC(C)       &hml LEFT_CONTROL LC(V)  &kp LC(R)    &kp LCTRL  &mmv MOVE_LEFT  &mo 9   &none  &none            &none
+&trans  &none      &kp LC(Z)  &mmv MOVE_DOWN  &mmv MOVE_UP             &none        &none      &none           &none   &none  &none            &none
+                              &trans          &trans                   &trans       &trans     &trans          &trans
             >;
         };
 
@@ -288,6 +288,15 @@
 &none   &none   &kp LEFT  &none     &kp RIGHT  &none     &none   &none   &none   &none  &none  &none
 &trans  &none   &kp END   &kp DOWN  &kp PG_DN  &none     &none   &none   &none   &none  &none  &none
                           &trans    &trans     &trans    &trans  &trans  &trans
+            >;
+        };
+
+        mouse_scroll_layer {
+            bindings = <
+&trans  &trans  &trans  &trans            &trans            &trans    &trans  &trans            &trans  &trans  &mwh SCROLL_RIGHT  &trans
+&trans  &trans  &trans  &trans            &kp LEFT_CONTROL  &trans    &trans  &mwh SCROLL_LEFT  &trans  &trans  &trans             &trans
+&trans  &trans  &trans  &mwh SCROLL_DOWN  &mwh SCROLL_UP    &trans    &trans  &trans            &trans  &trans  &trans             &trans
+                        &trans            &trans            &trans    &trans  &trans            &trans
             >;
         };
     };
