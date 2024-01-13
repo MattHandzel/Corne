@@ -66,6 +66,7 @@
             bindings = <&kp>, <&kp>;
 
             label = "HML";
+            require-prior-idle-ms = <125>;
         };
 
         hmr: hmr {
@@ -75,7 +76,7 @@
             flavor = "balanced";
             bindings = <&kp>, <&kp>;
 
-            require-prior-idle-ms = <0>;
+            require-prior-idle-ms = <125>;
             label = "HMR";
         };
 
