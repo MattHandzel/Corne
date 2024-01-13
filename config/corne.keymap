@@ -234,19 +234,19 @@
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&none  &trans  &trans            &trans            &kp LPAR             &kp GRAVE    &kp APOS  &kp RPAR              &kp EQUAL               &kp PLUS                &none         &none
+&none  &trans  &trans            &trans            &kp LPAR             &kp GRAVE    &none     &kp RPAR              &kp EQUAL               &kp PLUS                &none         &none
 &none  &kp N7  &hml LEFT_GUI N5  &hml LEFT_ALT N3  &hml LCTRL NUMBER_1  &kp N9       &kp N8    &hmr LEFT_CONTROL N0  &hmr LEFT_ALT NUMBER_2  &hmr LEFT_GUI NUMBER_4  &kp NUMBER_6  &none
-&none  &none   &kp MINUS         &kp LS(UNDER)     &kp LEFT_BRACKET     &kp TAB      &kp BSLH  &kp RIGHT_BRACKET     &kp SLASH               &kp LS(PLUS)            &none         &none
+&none  &none   &kp MINUS         &kp LS(UNDER)     &kp LEFT_BRACKET     &none        &kp BSLH  &kp RIGHT_BRACKET     &kp SLASH               &kp KP_ASTERISK         &none         &none
                                  &trans            &trans               &trans       &trans    &trans                &caps
             >;
         };
 
         shift_lower {
             bindings = <
-&trans  &trans         &trans                 &trans              &trans                         &kp LS(TILDE)    &kp LS(DQT)   &trans                      &trans                 &trans                &trans         &trans
-&trans  &kp AMPERSAND  &hml LEFT_GUI PERCENT  &hml LEFT_ALT HASH  &hml LEFT_CONTROL EXCLAMATION  &trans           &kp LS(STAR)  &hmr LEFT_CONTROL QUESTION  &hmr LEFT_ALT AT_SIGN  &hmr LEFT_GUI DOLLAR  &kp LS(CARET)  &trans
-&trans  &trans         &trans                 &trans              &kp LEFT_BRACE                 &trans           &trans        &kp LS(RIGHT_BRACE)         &kp PIPE               &none                 &trans         &trans
-                                              &trans              &trans                         &trans           &trans        &trans                      &kp LEFT_SHIFT
+&trans  &trans         &trans                 &trans              &kp GRAVE                      &none     &none   &kp TILDE                   &trans                 &trans                &trans         &trans
+&trans  &kp AMPERSAND  &hml LEFT_GUI PERCENT  &hml LEFT_ALT HASH  &hml LEFT_CONTROL EXCLAMATION  &none     &none   &hmr LEFT_CONTROL QUESTION  &hmr LEFT_ALT AT_SIGN  &hmr LEFT_GUI DOLLAR  &kp LS(CARET)  &trans
+&trans  &trans         &trans                 &trans              &kp LEFT_BRACE                 &trans    &trans  &kp LS(RIGHT_BRACE)         &kp PIPE               &none                 &trans         &trans
+                                              &trans              &trans                         &trans    &trans  &trans                      &kp LEFT_SHIFT
             >;
         };
 
