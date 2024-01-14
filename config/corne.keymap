@@ -48,7 +48,7 @@
 
         esc {
             bindings = <&kp ESCAPE>;
-            key-positions = <13 14>;
+            key-positions = <14 15>;
         };
 
         tab {
