@@ -11,6 +11,7 @@
 #include <dt-bindings/zmk/keys.h>
 
 // chaning the mouse speed
+
 #define U_MOUSE_MOVE_MAX 1000                     /* <--- New max speed setting (default: 600) */
 
 #undef MOVE_UP
@@ -24,21 +25,24 @@
 #define MOVE_RIGHT MOVE_HOR(U_MOUSE_MOVE_MAX)
 
 //changing the mouse scroll speed
+
 #define U_MOUSE_SCROLL_MAX 25                    /* <--- New max speed setting (default: 10) */
 
 #undef SCROLL_UP
 #undef SCROLL_DOWN
 #undef SCROLL_LEFT
 #undef SCROLL_RIGHT
+
 #define SCROLL_UP SCROLL_VERT(U_MOUSE_SCROLL_MAX)
 #define SCROLL_DOWN SCROLL_VERT(-U_MOUSE_SCROLL_MAX)
 #define SCROLL_LEFT SCROLL_HOR(-U_MOUSE_SCROLL_MAX)
 #define SCROLL_RIGHT SCROLL_HOR(U_MOUSE_SCROLL_MAX)
 
 &mwh {
-  time-to-max-speed-ms = <500>;                 /* <--- How long time until max speed is reached */
-  acceleration-exponent = <1>;
+    time-to-max-speed-ms = <500>;                 /* <--- How long time until max speed is reached */
+    acceleration-exponent = <1>;
 };
+
 &mmv {
     time-to-max-speed-ms = <500>;             /* <--- How long time until max speed is reached (default: 500) */
     acceleration-exponent = <1>;
@@ -47,30 +51,6 @@
 / {
     combos {
         compatible = "zmk,combos";
-
-        the {
-            bindings = <&the_chord>;
-            key-positions = <20 19 15>;
-            layers = <0>;
-        };
-
-        though {
-            bindings = <&though>;
-            key-positions = <20 19 14>;
-            layers = <0>;
-        };
-
-        because {
-            bindings = <&because>;
-            key-positions = <30 15>;
-            layers = <0>;
-        };
-
-        according {
-            bindings = <&according>;
-            key-positions = <13 14 8 9 18>;
-            layers = <0>;
-        };
 
         control_delete {
             bindings = <&kp LC(BACKSPACE)>;
@@ -145,6 +125,8 @@
             #binding-cells = <0>;
             bindings = <&kp Q &kp U>;
             label = "QU";
+            wait-ms = <1>;
+            tap-ms = <1>;
         };
 
         turn_to_caps_layer: turn_to_caps_layer {
@@ -152,6 +134,15 @@
             #binding-cells = <0>;
             bindings = <&none>;
             label = "TURN_TO_CAPS_LAYER";
+        };
+
+        capital_qu: capital_qu {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(Q) &kp U>;
+            label = "CAPITAL_QU";
+            wait-ms = <1>;
+            tap-ms = <1>;
         };
     };
 
