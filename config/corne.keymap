@@ -79,6 +79,7 @@
             label = "HML";
             require-prior-idle-ms = <250>;
         };
+
         hmr: hmr {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -89,15 +90,17 @@
             require-prior-idle-ms = <250>;
             label = "HMR";
         };
-hmbackspace: hmbackspace {
-               compatible = "zmk,behavior-hold-tap";
-               label = "HMBACKSPACE";
-               bindings = <&kp>, <&kp>;
 
-#binding-cells = <2>;
-               flavor = "balanced";
-               tapping-term-ms = <175>;
-};
+        hmbackspace: hmbackspace {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HMBACKSPACE";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <175>;
+        };
+
         system_layer_toggle: system_layer_toggle {
             compatible = "zmk,behavior-tap-dance";
             label = "SYSTEM_LAYER_TOGGLE";
@@ -123,6 +126,26 @@ hmbackspace: hmbackspace {
             #binding-cells = <1>;
             quick-release;
             release-after-ms = <600>;
+        };
+
+        mod_mmv: mod_mmv {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MOD_MMV";
+            bindings = <&kp>, <&mmv>;
+
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <175>;
+        };
+
+        mod_scroll: mod_scroll {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MOD_SCROLL";
+            bindings = <&kp>, <&mwh>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <175>;
+            flavor = "balanced";
         };
     };
 
@@ -164,19 +187,19 @@ hmbackspace: hmbackspace {
             //                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
 
             bindings = <
-&none  &kp SEMI    &kp COMMA    &kp DOT               &kp P          &kp Y        &kp F        &kp G                &kp C            &kp R            &kp L  &trans
-&none  &lt 4 A     &hml LGUI O  &hml LEFT_ALT E       &hmbackspace LCTRL I   &kp U        &kp D        &hmr LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &kp S  &trans
-&none  &lt 6 APOS  &qu          &kp J                 &kp K          &kp X        &kp B        &kp M                &kp W            &kp V            &kp Z  &trans
-                                &system_layer_toggle  &kp BACKSPACE  &kp ENTER    &key_repeat  &kp SPACE            &caps
+&none  &kp SEMI    &kp COMMA    &kp DOT               &kp P                 &kp Y        &kp F        &kp G                &kp C            &kp R            &kp L  &trans
+&none  &lt 4 A     &hml LGUI O  &hml LEFT_ALT E       &hmbackspace LCTRL I  &kp U        &kp D        &hmr LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &kp S  &trans
+&none  &lt 6 APOS  &qu          &kp J                 &kp K                 &kp X        &kp B        &kp M                &kp W            &kp V            &kp Z  &trans
+                                &system_layer_toggle  &kp BACKSPACE         &kp ENTER    &key_repeat  &kp SPACE            &caps
             >;
         };
 
         shift_main_layer {
             bindings = <
-&trans  &kp LS(COLON)  &kp LS(LT)       &kp LS(GT)            &kp LS(P)                &kp LS(Y)      &kp LS(F)    &kp LS(G)                &kp LS(C)            &kp LS(R)            &kp LS(L)  &trans
+&trans  &kp LS(COLON)  &kp LS(LT)       &kp LS(GT)            &kp LS(P)                        &kp LS(Y)      &kp LS(F)    &kp LS(G)                &kp LS(C)            &kp LS(R)            &kp LS(L)  &trans
 &trans  &kp LS(A)      &hml LGUI LS(O)  &hml LEFT_ALT LS(E)   &hmbackspace LEFT_CONTROL LS(I)  &kp LS(U)      &kp LS(D)    &hmr LEFT_CONTROL LS(H)  &hmr LEFT_ALT LS(T)  &hmr LEFT_GUI LS(N)  &kp LS(S)  &trans
-&trans  &kp LS(DQT)    &capital_qu      &kp LS(J)             &kp LS(K)                &kp LS(X)      &kp LS(B)    &kp LS(M)                &kp LS(W)            &kp LS(V)            &kp LS(Z)  &trans
-                                        &system_layer_toggle  &kp DELETE               &kp LS(RET)    &key_repeat  &kp SPACE                &kp LEFT_SHIFT
+&trans  &kp LS(DQT)    &capital_qu      &kp LS(J)             &kp LS(K)                        &kp LS(X)      &kp LS(B)    &kp LS(M)                &kp LS(W)            &kp LS(V)            &kp LS(Z)  &trans
+                                        &system_layer_toggle  &kp DELETE                       &kp LS(RET)    &key_repeat  &kp SPACE                &kp LEFT_SHIFT
             >;
         };
 
@@ -188,19 +211,19 @@ hmbackspace: hmbackspace {
             //                    | GUI |     | SPC |   | ENT |     | ALT |
 
             bindings = <
-&none  &trans  &trans            &trans            &kp LPAR             &kp GRAVE    &none     &kp RPAR              &kp EQUAL               &kp PLUS                &none         &none
+&none  &trans  &trans            &trans            &kp LPAR                     &kp GRAVE    &none     &kp RPAR              &kp EQUAL               &kp PLUS                &none         &none
 &none  &kp N7  &hml LEFT_GUI N5  &hml LEFT_ALT N3  &hmbackspace LCTRL NUMBER_1  &kp N9       &kp N8    &hmr LEFT_CONTROL N0  &hmr LEFT_ALT NUMBER_2  &hmr LEFT_GUI NUMBER_4  &kp NUMBER_6  &none
-&none  &none   &kp MINUS         &kp LS(UNDER)     &kp LEFT_BRACKET     &none        &kp BSLH  &kp RIGHT_BRACKET     &kp SLASH               &kp KP_ASTERISK         &none         &none
-                                 &trans            &trans               &trans       &trans    &trans                &caps
+&none  &none   &kp MINUS         &kp LS(UNDER)     &kp LEFT_BRACKET             &none        &kp BSLH  &kp RIGHT_BRACKET     &kp SLASH               &kp KP_ASTERISK         &none         &none
+                                 &trans            &trans                       &trans       &trans    &trans                &caps
             >;
         };
 
         shift_lower {
             bindings = <
-&trans  &trans         &trans                 &trans              &kp GRAVE                      &none     &none   &kp TILDE                   &trans                 &trans                &trans         &trans
+&trans  &trans         &trans                 &trans              &kp GRAVE                              &none     &none   &kp TILDE                   &trans                 &trans                &trans         &trans
 &trans  &kp AMPERSAND  &hml LEFT_GUI PERCENT  &hml LEFT_ALT HASH  &hmbackspace LEFT_CONTROL EXCLAMATION  &none     &none   &hmr LEFT_CONTROL QUESTION  &hmr LEFT_ALT AT_SIGN  &hmr LEFT_GUI DOLLAR  &kp LS(CARET)  &trans
-&trans  &trans         &trans                 &trans              &kp LEFT_BRACE                 &trans    &trans  &kp LS(RIGHT_BRACE)         &kp PIPE               &none                 &trans         &trans
-                                              &trans              &trans                         &trans    &trans  &trans                      &kp LEFT_SHIFT
+&trans  &trans         &trans                 &trans              &kp LEFT_BRACE                         &trans    &trans  &kp LS(RIGHT_BRACE)         &kp PIPE               &none                 &trans         &trans
+                                              &trans              &trans                                 &trans    &trans  &trans                      &kp LEFT_SHIFT
             >;
         };
 
@@ -224,10 +247,10 @@ hmbackspace: hmbackspace {
 
         left_and_mouse_layer {
             bindings = <
-&none   &kp LC(Q)  &kp LC(W)  &kp LC(T)       &kp LCTRL                &none        &none      &none           &mkp MB4  &mkp MB5          &mmv MOVE_RIGHT  &none
-&none   &none      &kp LC(A)  &kp LC(C)       &hmbackspace LEFT_CONTROL LC(V)  &kp LC(R)    &none      &mmv MOVE_LEFT  &mo 9     &kp LEFT_CONTROL  &none            &none
-&trans  &none      &kp LC(Z)  &mmv MOVE_DOWN  &mmv MOVE_UP             &none        &none      &none           &none     &none             &none            &none
-                              &trans          &trans                   &mkp LCLK    &mkp RCLK  &none           &none
+&none   &kp LC(Q)  &kp LC(W)  &kp LC(T)       &none                            &none        &none      &none                            &mkp MB4  &mkp MB5  &mmv MOVE_RIGHT  &none
+&none   &none      &kp LC(A)  &kp LC(C)       &hmbackspace LEFT_CONTROL LC(V)  &kp LC(R)    &none      &mod_mmv LEFT_CONTROL MOVE_LEFT  &mo 9     &none     &none            &none
+&trans  &none      &kp LC(Z)  &mmv MOVE_DOWN  &mmv MOVE_UP                     &none        &none      &none                            &none     &none     &none            &none
+                              &trans          &trans                           &mkp LCLK    &mkp RCLK  &none                            &none
             >;
         };
 
@@ -251,10 +274,10 @@ hmbackspace: hmbackspace {
 
         mouse_scroll_layer {
             bindings = <
-&trans  &trans  &trans  &trans            &trans            &trans    &trans  &trans            &trans  &trans            &mwh SCROLL_RIGHT  &trans
-&trans  &trans  &trans  &trans            &kp LEFT_CONTROL  &trans    &trans  &mwh SCROLL_LEFT  &trans  &kp LEFT_CONTROL  &trans             &trans
-&trans  &trans  &trans  &mwh SCROLL_DOWN  &mwh SCROLL_UP    &trans    &trans  &trans            &trans  &trans            &trans             &trans
-                        &trans            &trans            &trans    &trans  &trans            &trans
+&trans  &trans  &trans  &trans            &trans            &trans    &trans  &trans                                &trans  &trans  &mwh SCROLL_RIGHT  &trans
+&trans  &trans  &trans  &trans            &kp LEFT_CONTROL  &trans    &trans  &mod_scroll LEFT_CONTROL SCROLL_LEFT  &trans  &none   &trans             &trans
+&trans  &trans  &trans  &mwh SCROLL_DOWN  &mwh SCROLL_UP    &trans    &trans  &trans                                &trans  &trans  &trans             &trans
+                        &trans            &trans            &trans    &trans  &trans                                &trans
             >;
         };
     };
