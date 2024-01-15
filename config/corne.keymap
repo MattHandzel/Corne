@@ -117,6 +117,16 @@
             quick-release;
             release-after-ms = <600>;
         };
+
+        hmbackspace: hmbackspace {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HMBACKSPACE";
+            bindings = <&none>, <&none>;
+
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <175>;
+        };
     };
 
     macros {
