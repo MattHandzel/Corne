@@ -37,7 +37,7 @@
 
 &mwh {
   time-to-max-speed-ms = <500>;                 /* <--- How long time until max speed is reached */
-  acceleration-exponent = <2>;
+  acceleration-exponent = <1.4>;
 };
 &mmv {
     time-to-max-speed-ms = <500>;             /* <--- How long time until max speed is reached (default: 500) */
