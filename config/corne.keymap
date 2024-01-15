@@ -48,6 +48,8 @@
     acceleration-exponent = <1>;
 };
 
+&sl { release-after-ms = <600>; };
+
 / {
     combos {
         compatible = "zmk,combos";
