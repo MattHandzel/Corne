@@ -11,7 +11,7 @@
 #include <dt-bindings/zmk/keys.h>
 
 // chaning the mouse speed
-#define U_MOUSE_MOVE_MAX 1400                     /* <--- New max speed setting (default: 600) */
+#define U_MOUSE_MOVE_MAX 1000                     /* <--- New max speed setting (default: 600) */
 
 #undef MOVE_UP
 #undef MOVE_DOWN
@@ -24,7 +24,7 @@
 #define MOVE_RIGHT MOVE_HOR(U_MOUSE_MOVE_MAX)
 
 //changing the mouse scroll speed
-#define U_MOUSE_SCROLL_MAX 100                    /* <--- New max speed setting (default: 10) */
+#define U_MOUSE_SCROLL_MAX 25                    /* <--- New max speed setting (default: 10) */
 
 #undef SCROLL_UP
 #undef SCROLL_DOWN
@@ -37,11 +37,11 @@
 
 &mwh {
   time-to-max-speed-ms = <500>;                 /* <--- How long time until max speed is reached */
-  acceleration-exponent = <1.4>;
+  acceleration-exponent = <1>;
 };
 &mmv {
     time-to-max-speed-ms = <500>;             /* <--- How long time until max speed is reached (default: 500) */
-    acceleration-exponent = <2>;
+    acceleration-exponent = <1>;
 };
 
 / {
@@ -135,7 +135,7 @@
             bindings = <&mo>;
             #binding-cells = <1>;
             quick-release;
-            release-after-ms = <500>;
+            release-after-ms = <600>;
         };
     };
 
@@ -147,86 +147,11 @@
             label = "QU";
         };
 
-        the_chord: the_chord {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp T &kp H &kp E>;
-            label = "THE_CHORD";
-            wait-ms = <1>;
-            tap-ms = <1>;
-        };
-
-        capital_qu: capital_qu {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LS(Q) &kp U>;
-            label = "CAPITAL_QU";
-        };
-
-        that: that {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp T &kp H &kp A &kp T>;
-            label = "THAT";
-            wait-ms = <1>;
-            tap-ms = <1>;
-        };
-
-        because: because {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp B &kp E &kp C &kp A &kp U &kp S &kp E>;
-            label = "BECAUSE";
-            wait-ms = <1>;
-            tap-ms = <1>;
-        };
-
-        which: which {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp W &kp H &kp I &kp C &kp H>;
-            label = "WHICH";
-            wait-ms = <1>;
-            tap-ms = <1>;
-        };
-
-        according: according {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp A &kp C &kp C &kp O &kp R &kp D &kp I &kp N &kp G>;
-            label = "ACCORDING";
-            wait-ms = <1>;
-            tap-ms = <1>;
-        };
-
-        though: though {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp T &kp H &kp O &kp U &kp G &kp H>;
-            label = "THOUGH";
-            wait-ms = <1>;
-            tap-ms = <1>;
-        };
-
         turn_to_caps_layer: turn_to_caps_layer {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
             bindings = <&none>;
             label = "TURN_TO_CAPS_LAYER";
-        };
-
-        shift: shift {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&none>;
-            label = "SHIFT";
-        };
-
-        vim_x: vim_x {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&none &kp X>;
-            label = "VIM_X";
         };
     };
 
