@@ -63,7 +63,7 @@
         esc {
             bindings = <&kp ESCAPE>;
             key-positions = <14 15>;
-            require-prior-idle-ms = <250>;
+            require-prior-idle-ms = <100>;
         };
 
         tab {
