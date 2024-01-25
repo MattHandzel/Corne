@@ -73,7 +73,7 @@
         };
 
         shift_tab {
-            bindings = <&kp TAB>;
+            bindings = <&kp LS(TAB)>;
             key-positions = <2 3>;
             layers = <1 3 8>;
         };
