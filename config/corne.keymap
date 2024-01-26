@@ -258,10 +258,10 @@
 
         left_and_mouse_layer {
             bindings = <
-&none   &kp LC(Q)  &kp LC(W)  &kp LC(T)       &none                            &none        &none      &none           &mkp MB4  &mkp MB5  &mmv MOVE_RIGHT  &none
-&none   &none      &kp LC(A)  &kp LC(C)       &hmbackspace LEFT_CONTROL LC(V)  &kp LC(R)    &none      &mmv MOVE_LEFT  &mo 9     &none     &none            &none
-&trans  &none      &kp LC(Z)  &mmv MOVE_DOWN  &mmv MOVE_UP                     &none        &none      &none           &none     &none     &none            &none
-                              &trans          &trans                           &mkp LCLK    &mkp RCLK  &none           &none
+&none   &kp LC(Q)  &kp LC(W)  &kp LC(T)       &none                            &none        &none      &none           &mkp MB4        &mkp MB5  &mmv MOVE_RIGHT  &none
+&none   &none      &kp LC(A)  &kp LC(C)       &hmbackspace LEFT_CONTROL LC(V)  &kp LC(R)    &none      &mmv MOVE_LEFT  &mo 9           &none     &none            &none
+&trans  &none      &kp LC(Z)  &mmv MOVE_DOWN  &mmv MOVE_UP                     &none        &none      &none           &none           &none     &none            &none
+                              &trans          &trans                           &mkp LCLK    &mkp RCLK  &none           &kp LEFT_SHIFT
             >;
         };
 
@@ -285,10 +285,10 @@
 
         mouse_scroll_layer {
             bindings = <
-&trans  &trans  &trans  &trans            &trans            &trans    &trans  &trans            &trans  &trans  &mwh SCROLL_RIGHT  &trans
-&trans  &trans  &trans  &trans            &kp LEFT_CONTROL  &trans    &trans  &mwh SCROLL_LEFT  &trans  &none   &trans             &trans
-&trans  &trans  &trans  &mwh SCROLL_DOWN  &mwh SCROLL_UP    &trans    &trans  &trans            &trans  &trans  &trans             &trans
-                        &trans            &trans            &trans    &trans  &trans            &trans
+&trans  &trans  &trans  &trans            &trans            &trans    &trans  &trans            &trans          &trans  &mwh SCROLL_RIGHT  &trans
+&trans  &trans  &trans  &trans            &kp LEFT_CONTROL  &trans    &trans  &mwh SCROLL_LEFT  &trans          &none   &trans             &trans
+&trans  &trans  &trans  &mwh SCROLL_DOWN  &mwh SCROLL_UP    &trans    &trans  &trans            &trans          &trans  &trans             &trans
+                        &trans            &trans            &trans    &trans  &trans            &kp LEFT_SHIFT
             >;
         };
     };
