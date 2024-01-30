@@ -5,8 +5,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-#include <behaviors.dtsi>
 #include <dt-bindings/zmk/mouse.h>
+#include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 
@@ -209,7 +209,7 @@
             bindings = <
 &trans  &kp LS(COLON)  &kp LS(LT)       &kp LS(GT)            &kp LS(P)                        &kp LS(Y)      &kp LS(F)    &kp LS(G)                        &kp LS(C)            &kp LS(R)            &kp LS(L)  &trans
 &trans  &kp LS(A)      &hml LGUI LS(O)  &hml LEFT_ALT LS(E)   &hmbackspace LEFT_CONTROL LS(I)  &kp LS(U)      &kp LS(D)    &hmbackspace LEFT_CONTROL LS(H)  &hmr LEFT_ALT LS(T)  &hmr LEFT_GUI LS(N)  &kp LS(S)  &trans
-&trans  &kp LS(DQT)    &kp Q            &kp LS(J)             &kp LS(K)                        &kp LS(X)      &kp LS(B)    &kp LS(M)                        &kp LS(W)            &kp LS(V)            &kp LS(Z)  &trans
+&trans  &kp LS(DQT)    &kp LS(Q)        &kp LS(J)             &kp LS(K)                        &kp LS(X)      &kp LS(B)    &kp LS(M)                        &kp LS(W)            &kp LS(V)            &kp LS(Z)  &trans
                                         &system_layer_toggle  &kp DELETE                       &kp LS(RET)    &key_repeat  &kp SPACE                        &kp LEFT_SHIFT
             >;
         };
