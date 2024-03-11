@@ -118,7 +118,7 @@
             #binding-cells = <0>;
             bindings = <&sl 2>, <&sl 5>;
 
-            tapping-term-ms = <250>;
+            tapping-term-ms = <200>;
         };
 
         caps: caps {
