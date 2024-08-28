@@ -199,8 +199,8 @@
 
             bindings = <
 &none  &kp SEMI    &kp COMMA    &kp DOT               &kp P                 &kp Y        &kp F        &kp G                        &kp C            &kp R            &kp L  &trans
-&none  &lt 4 A     &hml LGUI O  &hml LEFT_ALT E       &hmbackspace LCTRL I  &kp U        &kp D        &hmbackspace LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &kp S  &trans
-&none  &lt 6 APOS  &kp Q        &kp J                 &kp K                 &kp X        &kp B        &kp M                        &kp W            &kp V            &kp Z  &trans
+&none  &kp A     &hml LGUI O  &hml LEFT_ALT E       &hmbackspace LCTRL I  &kp U        &kp D        &hmbackspace LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &lt 4 S  &trans
+&none  &kp APOS  &kp Q        &kp J                 &kp K                 &kp X        &kp B        &kp M                        &kp W            &kp V            &lt 6 Z  &trans
                                 &system_layer_toggle  &kp BACKSPACE         &kp ENTER    &key_repeat  &kp SPACE                    &caps
             >;
         };
@@ -241,7 +241,7 @@
         vim_layer {
             bindings = <
 &none  &none  &none     &none                          &kp PAGE_UP       &none          &none          &none                                 &none           &none              &kp RIGHT  &none
-&none  &none  &kp LGUI  &hml LEFT_ALT LC(RIGHT_ARROW)  &kp LEFT_CONTROL  &kp PAGE_UP    &kp PAGE_DOWN  &hmbackspace LEFT_CONTROL LEFT_ARROW  &kp LEFT_ALT    &hmr LEFT_GUI END  &kp HOME   &none
+&none  &none  &kp LGUI  &hml LEFT_ALT LC(RIGHT_ARROW)  &kp LEFT_CONTROL  &kp PAGE_UP    &kp LEFT_ARROW  &hmbackspace LEFT_CONTROL UP_ARROW  &kp DOWN_ARROW    &hmr LEFT_GUI RIGHT_ARROW   &none   &none
 &none  &none  &none     &kp DOWN_ARROW                 &kp UP            &kp DELETE     &kp LC(LEFT)   &none                                 &none           &none              &none      &none
                         &trans                         &trans            &trans         &trans         &trans                                &kp LEFT_SHIFT
             >;
@@ -258,9 +258,9 @@
 
         left_and_mouse_layer {
             bindings = <
-&none   &kp LC(Q)  &kp LC(W)  &kp LC(T)       &none                            &none        &none      &none           &mkp MB4        &mkp MB5  &mmv MOVE_RIGHT  &none
-&none   &none      &kp LC(A)  &kp LC(C)       &hmbackspace LEFT_CONTROL LC(V)  &kp LC(R)    &none      &mmv MOVE_LEFT  &mo 9           &none     &none            &none
-&trans  &none      &kp LC(Z)  &mmv MOVE_DOWN  &mmv MOVE_UP                     &none        &none      &none           &none           &none     &none            &none
+&none   &none  &none  &none       &none                            &none        &none      &none           &mkp MB4        &mkp MB5  &mmv MOVE_RIGHT  &none
+&none   &none      &none  &none       &mo 9 &none &none    &mmv MOVE_LEFT      &mmv MOVE_UP  &mmv MOVE_DOWN   &mmv MOVE_RIGHT     &none            &none
+&trans  &none      &none  &none  &none                     &none        &none      &none           &none           &none     &none            &none
                               &trans          &trans                           &mkp LCLK    &mkp RCLK  &none           &kp LEFT_SHIFT
             >;
         };
@@ -285,9 +285,9 @@
 
         mouse_scroll_layer {
             bindings = <
-&trans  &trans  &trans  &trans            &trans            &trans    &trans  &trans            &trans          &trans  &mwh SCROLL_RIGHT  &trans
-&trans  &trans  &trans  &trans            &kp LEFT_CONTROL  &trans    &trans  &mwh SCROLL_LEFT  &trans          &none   &trans             &trans
-&trans  &trans  &trans  &mwh SCROLL_DOWN  &mwh SCROLL_UP    &trans    &trans  &trans            &trans          &trans  &trans             &trans
+&trans  &trans  &trans  &trans            &trans            &trans    &trans  &trans            &trans          &trans  &trans  &trans
+&trans  &trans  &kp LEFT_GUI  &kp LEFT_ALT &kp LEFT_CONTROL  &trans    &mwh SCROLL_LEFT  &mwh SCROLL_UP  &mwh SCROLL_DOWN          &mwh SCROLL_RIGHT   &trans             &trans
+&trans  &trans  &trans   &trans &trans   &trans    &trans  &trans            &trans          &trans  &trans             &trans
                         &trans            &trans            &trans    &trans  &trans            &kp LEFT_SHIFT
             >;
         };
