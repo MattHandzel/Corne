@@ -287,8 +287,8 @@
 
         mouse_scroll_layer {
             bindings = <
-&trans  &trans  &trans        &trans        &trans            &trans    &trans            &trans          &trans            &trans             &trans  &trans
-&trans  &trans  &kp LEFT_GUI  &kp LEFT_ALT  &kp LEFT_CONTROL  &trans    &mwh SCROLL_LEFT  &mwh SCROLL_UP  &mwh SCROLL_DOWN  &mwh SCROLL_RIGHT  &trans  &trans
+&trans  &trans  &trans        &trans        &trans            &trans    &trans            &trans          &mwh SCROLL_UP            &trans             &trans  &trans
+&trans  &trans  &kp LEFT_GUI  &kp LEFT_ALT  &kp LEFT_CONTROL  &trans    &mwh SCROLL_LEFT  &mwh SCROLL_LEFT  &mwh SCROLL_DOWN  &mwh SCROLL_RIGHT  &trans  &trans
 &trans  &trans  &trans        &trans        &trans            &trans    &trans            &trans          &trans            &trans             &trans  &trans
                               &trans        &trans            &trans    &trans            &trans          &kp LEFT_SHIFT
             >;
