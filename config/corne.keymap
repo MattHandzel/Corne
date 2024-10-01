@@ -160,6 +160,8 @@
             tapping-term-ms = <TYPING_TERM_MS_HOMEROW_MODS>;
             flavor = "balanced";
         };
+
+
     };
 
     macros {
@@ -262,7 +264,7 @@
             bindings = <
 &none   &none  &none  &none         &none         &none               &none           &mkp MB4           &mmv MOVE_UP    &mkp MB5         &none  &none
 &none   &none   &kp LEFT_GUI  &kp LEFT_ALT  &kp LEFT_CONTROL &none    &mmv MOVE_LEFT  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &none  &none
-&trans  &none  &none  &none         &none         &none               &none           &none           &none           &none            &none  &none
+&trans  &none  &none  &none         &none         &none               &none           &mo 9           &mo 9           &mo 9            &none  &none
                       &trans        &trans        &mkp LCLK           &mkp LCLK       &mkp RCLK       &kp LEFT_SHIFT
             >;
         };
