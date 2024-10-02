@@ -162,7 +162,7 @@
             flavor = "balanced";
         };
 
-        tap_to_move_double_to_scroll: mouse_tap_dance_down {
+        mouse_tap_dance_down: mouse_tap_dance_down {
             compatible = "zmk,behavior-tap-dance";
             label = "TAP_TO_MOVE_DOUBLE_TO_SCROLL";
             #binding-cells = <0>;
@@ -170,7 +170,7 @@
             bindings = <&mmv MOVE_LEFT>, <&mwh SCOLL_LEFT>;
         };
 
-        tap_to_move_double_to_scroll: mouse_tap_dance_up {
+        mouse_tap_dance_up: mouse_tap_dance_up {
             compatible = "zmk,behavior-tap-dance";
             label = "TAP_TO_MOVE_DOUBLE_TO_SCROLL";
             #binding-cells = <0>;
@@ -178,7 +178,7 @@
             bindings = <&mmv MOVE_RIGHT>, <&mwh SCOLL_RIGHT>;
         };
 
-        tap_to_move_double_to_scroll: mouse_tap_dance_left {
+        mouse_tap_dance_left: mouse_tap_dance_left {
             compatible = "zmk,behavior-tap-dance";
             label = "TAP_TO_MOVE_DOUBLE_TO_SCROLL";
             #binding-cells = <0>;
@@ -186,7 +186,7 @@
             bindings = <&mmv MOVE_UP>, <&mwh SCOLL_UP>;
         };
 
-        tap_to_move_double_to_scroll: mouse_tap_dance_right {
+        mouse_tap_dance_right: mouse_tap_dance_right {
             compatible = "zmk,behavior-tap-dance";
             label = "TAP_TO_MOVE_DOUBLE_TO_SCROLL";
             #binding-cells = <0>;
