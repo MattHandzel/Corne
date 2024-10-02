@@ -166,7 +166,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "MOUSE_TAP_DANCE_UP";
             #binding-cells = <0>;
-            tapping-term-ms = <500>;
+            tapping-term-ms = <150>;
             bindings = <&mmv MOVE_UP>, <&mwh SCROLL_UP>;
         };
 
@@ -174,7 +174,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "MOUSE_TAP_DANCE_DOWN";
             #binding-cells = <0>;
-            tapping-term-ms = <500>;
+            tapping-term-ms = <150>;
             bindings = <&mmv MOVE_DOWN>, <&mwh SCROLL_DOWN>;
         };
 
@@ -182,7 +182,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "MOUSE_TAP_DANCE_LEFT";
             #binding-cells = <0>;
-            tapping-term-ms = <500>;
+            tapping-term-ms = <150>;
             bindings = <&mmv MOVE_LEFT>, <&mwh SCROLL_LEFT>;
         };
 
@@ -190,7 +190,7 @@
             compatible = "zmk,behavior-tap-dance";
             label = "MOUSE_TAP_DANCE_RIGHT";
             #binding-cells = <0>;
-            tapping-term-ms = <500>;
+            tapping-term-ms = <150>;
             bindings = <&mmv MOVE_RIGHT>, <&mwh SCROLL_RIGHT>;
         };
     };
