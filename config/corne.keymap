@@ -167,40 +167,40 @@
             label = "MOUSE_TAP_DANCE";
             #binding-cells = <0>;
             tapping-term-ms = <500>;
-            bindings = <&mmv>, <&mwh>;
+            bindings = <&mmv MOVE_UP>, <&mwh SCROLL_UP>;
         };
 
-//        mouse_tap_dance_down: mouse_tap_dance_down {
-//            compatible = "zmk,behavior-tap-dance";
-//            label = "MOUSE_TAP_DANCE_DOWN";
-//            #binding-cells = <0>;
-//            tapping-term-ms = <500>;
-//            bindings = <&mmv MOVE_LEFT>, <&mwh SCOLL_LEFT>;
-//        };
-//
-//        mouse_tap_dance_up: mouse_tap_dance_up {
-//            compatible = "zmk,behavior-tap-dance";
-//            label = "MOUSE_TAP_DANCE_UP";
-//            #binding-cells = <0>;
-//            tapping-term-ms = <500>;
-//            bindings = <&mmv MOVE_RIGHT>, <&mwh SCOLL_RIGHT>;
-//        };
-//
-//        mouse_tap_dance_left: mouse_tap_dance_left {
-//            compatible = "zmk,behavior-tap-dance";
-//            label = "MOUSE_TAP_DANCE_LEFT";
-//            #binding-cells = <0>;
-//            tapping-term-ms = <500>;
-//            bindings = <&mmv MOVE_UP>, <&mwh SCOLL_UP>;
-//        };
-//
-//        mouse_tap_dance_right: mouse_tap_dance_right {
-//            compatible = "zmk,behavior-tap-dance";
-//            label = "MOUSE_TAP_DANCE_RIGHT";
-//            #binding-cells = <0>;
-//            tapping-term-ms = <500>;
-//            bindings = <&mmv MOVE_DOWN>, <&mwh SCOLL_DOWN>;
-//        };
+        //        mouse_tap_dance_down: mouse_tap_dance_down {
+        //            compatible = "zmk,behavior-tap-dance";
+        //            label = "MOUSE_TAP_DANCE_DOWN";
+        //            #binding-cells = <0>;
+        //            tapping-term-ms = <500>;
+        //            bindings = <&mmv MOVE_LEFT>, <&mwh SCOLL_LEFT>;
+        //        };
+        //
+        //        mouse_tap_dance_up: mouse_tap_dance_up {
+        //            compatible = "zmk,behavior-tap-dance";
+        //            label = "MOUSE_TAP_DANCE_UP";
+        //            #binding-cells = <0>;
+        //            tapping-term-ms = <500>;
+        //            bindings = <&mmv MOVE_RIGHT>, <&mwh SCOLL_RIGHT>;
+        //        };
+        //
+        //        mouse_tap_dance_left: mouse_tap_dance_left {
+        //            compatible = "zmk,behavior-tap-dance";
+        //            label = "MOUSE_TAP_DANCE_LEFT";
+        //            #binding-cells = <0>;
+        //            tapping-term-ms = <500>;
+        //            bindings = <&mmv MOVE_UP>, <&mwh SCOLL_UP>;
+        //        };
+        //
+        //        mouse_tap_dance_right: mouse_tap_dance_right {
+        //            compatible = "zmk,behavior-tap-dance";
+        //            label = "MOUSE_TAP_DANCE_RIGHT";
+        //            #binding-cells = <0>;
+        //            tapping-term-ms = <500>;
+        //            bindings = <&mmv MOVE_DOWN>, <&mwh SCOLL_DOWN>;
+        //        };
     };
 
     macros {
@@ -301,10 +301,10 @@
 
         left_and_mouse_layer {
             bindings = <
-&none   &none  &none         &none         &none             &none        &none      &mkp MB4               &mouse_tap_dance_up    &mkp MB5                &none  &none
-&none   &none  &kp LEFT_GUI  &kp LEFT_ALT  &kp LEFT_CONTROL  &none        &none      &mouse_tap_dance_left  &mouse_tap_dance_down  &mouse_tap_dance_right  &none  &none
-&trans  &none  &none         &none         &none             &none        &none      &mo 9                  &mo 9                  &mo 9                   &none  &none
-                             &trans        &mkp RCLK         &mkp LCLK    &mkp LCLK  &mkp RCLK              &kp LEFT_SHIFT
+&none   &none  &none         &none         &none             &none        &none      &mkp MB4          &mouse_tap_dance  &mkp MB5  &none  &none
+&none   &none  &kp LEFT_GUI  &kp LEFT_ALT  &kp LEFT_CONTROL  &none        &none      &mouse_tap_dance  &none             &none     &none  &none
+&trans  &none  &none         &none         &none             &none        &none      &mo 9             &mo 9             &mo 9     &none  &none
+                             &trans        &mkp RCLK         &mkp LCLK    &mkp LCLK  &mkp RCLK         &kp LEFT_SHIFT
             >;
         };
 
