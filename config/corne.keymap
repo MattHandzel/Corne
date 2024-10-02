@@ -167,7 +167,7 @@
             label = "MOUSE_TAP_DANCE";
             #binding-cells = <0>;
             tapping-term-ms = <500>;
-            bindings = <&mmv MOVE_UP>, <&mwh SCROLL_UP>;
+            bindings = <&mmv MOVE_VERT(-U_MOUSE_MOVE_MAX)>, <&mwh SCROLL_VERT(U_MOUSE_SCROLL_MAX)>;
         };
 
         //        mouse_tap_dance_down: mouse_tap_dance_down {
