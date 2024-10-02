@@ -278,10 +278,10 @@
 
         left_and_mouse_layer {
             bindings = <
-&none   &none  &none         &none         &none             &none        &none      &mkp MB4               &mouse_tap_dance_up    &mkp MB5                &none  &none
-&none   &none  &kp LEFT_GUI  &kp LEFT_ALT  &kp LEFT_CONTROL  &none        &none      &mouse_tap_dance_left  &mouse_tap_dance_down  &mouse_tap_dance_right  &none  &none
-&trans  &none  &none         &none         &none             &none        &none      &mo 9                  &mo 9                  &mo 9                   &none  &none
-                             &trans        &mkp RCLK         &mkp LCLK    &mkp LCLK  &mkp RCLK              &kp LEFT_SHIFT
+&none   &none  &none         &none         &none             &none        &none      &mkp MB4          &mmv MOVE_UP &mkp MB5  &none  &none
+&none   &none  &kp LEFT_GUI  &kp LEFT_ALT  &kp LEFT_CONTROL  &none        &none      &mmv MOVE_LEFT &mmv MOVE_DOWN             &mmv MOVE_RIGHT &none  &none
+&trans  &none  &none         &none         &none             &none        &none      &mo 9             &mo 9             &mo 9     &none  &none
+                             &trans        &mkp RCLK         &mkp LCLK    &mkp LCLK  &mkp RCLK         &kp LEFT_SHIFT
             >;
         };
 
