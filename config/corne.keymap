@@ -246,8 +246,8 @@
         vim_layer {
             bindings = <
 &none  &none  &none     &none                          &none       &none          &none           &none                               &kp UP_ARROW           &none                      &none  &none
-&none  &none  &kp LGUI  &hml LEFT_ALT   &kp LEFT_CONTROL  &kp PAGE_UP    &kp PAGE_DOWN   &hmbackspace LEFT_CONTROL LEFT_ARROW  &hmr LEFT_ALT DOWN_ARROW  &hmr LEFT_GUI RIGHT_ARROW  &none      &none
-&none  &none  &none     &kp DOWN_ARROW                 &kp UP            &kp DELETE     &kp LC(LEFT)    &none                               &none           &none                      &none      &none
+&none  &none  &kp LGUI  &kp LEFT_ALT   &kp LEFT_CONTROL  &kp PAGE_UP    &kp PAGE_DOWN   &hmbackspace LEFT_CONTROL LEFT_ARROW  &hmr LEFT_ALT DOWN_ARROW  &hmr LEFT_GUI RIGHT_ARROW  &none      &none
+&none  &none  &none     &none                 &none            &kp DELETE     &kp LC(LEFT)    &none                               &none           &none                      &none      &none
                         &trans                         &trans            &trans         &trans          &trans                              &kp LEFT_SHIFT
             >;
         };
