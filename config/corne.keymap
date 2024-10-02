@@ -162,7 +162,13 @@
             flavor = "balanced";
         };
 
-
+        tap_to_move_double_to_scroll: tap_to_move_double_to_scroll {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_TO_MOVE_DOUBLE_TO_SCROLL";
+            #binding-cells = <0>;
+            tapping-term-ms = <500>;
+            bindings = <&kp A>, <&kp A>;
+        };
     };
 
     macros {
@@ -245,10 +251,10 @@
 
         vim_layer {
             bindings = <
-&none  &none  &none     &none                          &none       &none          &none           &none                               &kp UP_ARROW           &none                      &none  &none
-&none  &none  &kp LGUI  &kp LEFT_ALT   &kp LEFT_CONTROL  &kp PAGE_UP    &kp PAGE_DOWN   &hmbackspace LEFT_CONTROL LEFT_ARROW  &hmr LEFT_ALT DOWN_ARROW  &hmr LEFT_GUI RIGHT_ARROW  &none      &none
-&none  &none  &none     &none                 &none            &kp DELETE     &kp LC(LEFT)    &none                               &none           &none                      &none      &none
-                        &trans                         &trans            &trans         &trans          &trans                              &kp LEFT_SHIFT
+&none  &none  &none     &none         &none             &none          &none          &none                                 &kp UP_ARROW              &none                      &none  &none
+&none  &none  &kp LGUI  &kp LEFT_ALT  &kp LEFT_CONTROL  &kp PAGE_UP    &kp PAGE_DOWN  &hmbackspace LEFT_CONTROL LEFT_ARROW  &hmr LEFT_ALT DOWN_ARROW  &hmr LEFT_GUI RIGHT_ARROW  &none  &none
+&none  &none  &none     &none         &none             &kp DELETE     &kp LC(LEFT)   &none                                 &none                     &none                      &none  &none
+                        &trans        &trans            &trans         &trans         &trans                                &kp LEFT_SHIFT
             >;
         };
 
@@ -263,10 +269,10 @@
 
         left_and_mouse_layer {
             bindings = <
-&none   &none  &none  &none         &none         &none               &none           &mkp MB4           &mmv MOVE_UP    &mkp MB5         &none  &none
-&none   &none   &kp LEFT_GUI  &kp LEFT_ALT  &kp LEFT_CONTROL &none    &none  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &none  &none
-&trans  &none  &none  &none         &none         &none               &none           &mo 9           &mo 9           &mo 9            &none  &none
-                      &trans        &mkp RCLK        &mkp LCLK           &mkp LCLK       &mkp RCLK       &kp LEFT_SHIFT
+&none   &none  &none         &none         &none             &none        &none      &mkp MB4        &mmv MOVE_UP    &mkp MB5         &none  &none
+&none   &none  &kp LEFT_GUI  &kp LEFT_ALT  &kp LEFT_CONTROL  &none        &none      &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &none  &none
+&trans  &none  &none         &none         &none             &none        &none      &mo 9           &mo 9           &mo 9            &none  &none
+                             &trans        &mkp RCLK         &mkp LCLK    &mkp LCLK  &mkp RCLK       &kp LEFT_SHIFT
             >;
         };
 
