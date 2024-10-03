@@ -220,7 +220,7 @@
             bindings = <
 &none  &kp SEMI  &kp COMMA    &kp DOT               &kp P                 &kp Y        &kp F        &kp G                        &kp C            &kp R            &kp L             &trans
 &none  &kp A     &hml LGUI O  &hml LEFT_ALT E       &hmbackspace LCTRL I  &kp U        &kp D        &hmbackspace LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &lt 4 S           &trans
-&none  &kp APOS  &kp Q        &kp J                 &kp K                 &kp X        &kp B        &kp M                        &kp W            &kp V            &mouse_tap_dance  &trans
+&none  &kp APOS  &kp Q        &kp J                 &kp K                 &kp X        &kp B        &kp M                        &kp W            &kp V            &lt 9 Z  &trans
                               &system_layer_toggle  &kp BACKSPACE         &kp ENTER    &key_repeat  &kp SPACE                    &caps
             >;
         };
