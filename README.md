@@ -2,7 +2,7 @@ Here is an ergonomic keyboard I made, a Corne
 
 ![./assets/both.jpg](./assets/both.jpg)
 
-![./assets/close_up.jpg](./assets/both.jpg)
+![./assets/close_up.jpg](./assets/close_up.jpg)
 
 ![./assets/showing_off_magnets.jpg](./assets/showing_off_magnets.jpg)
 
