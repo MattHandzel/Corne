@@ -1,4 +1,5 @@
 Here is an ergonomic keyboard I made, a Corne
+![./assets/typing-demo-2025-01-15.gif](./assets/typing-demo-2025-01-15.gif)
 
 ![./assets/both.jpg](./assets/both.jpg)
 
