@@ -1,0 +1,327 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ * SPDX-License-Identifier: MIT
+ *
+ * TOTEM port of the Corne keymap.
+ *
+ * TOTEM key positions (38 keys):
+ *            0   1   2   3   4     5   6   7   8   9
+ *           10  11  12  13  14    15  16  17  18  19
+ *       20  21  22  23  24  25    26  27  28  29  30  31
+ *                   32  33  34    35  36  37
+ *
+ * Mapping from the 42-key Corne: outer columns of the top two rows
+ * (which were &none/&trans) are dropped; the Corne's bottom-row outer
+ * keys land on the TOTEM's physical outer pinky keys (20 and 31).
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/mouse.h>
+
+// chaning the mouse speed
+
+#define U_MOUSE_MOVE_MAX 1000                     /* <--- New max speed setting (default: 600) */
+
+#undef MOVE_UP
+#undef MOVE_DOWN
+#undef MOVE_LEFT
+#undef MOVE_RIGHT
+
+#define MOVE_UP MOVE_VERT(-U_MOUSE_MOVE_MAX)
+#define MOVE_DOWN MOVE_VERT(U_MOUSE_MOVE_MAX)
+#define MOVE_LEFT MOVE_HOR(-U_MOUSE_MOVE_MAX)
+#define MOVE_RIGHT MOVE_HOR(U_MOUSE_MOVE_MAX)
+
+//changing the mouse scroll speed
+
+#define U_MOUSE_SCROLL_MAX 35                    /* <--- New max speed setting (default: 10) */
+
+#undef SCROLL_UP
+#undef SCROLL_DOWN
+#undef SCROLL_LEFT
+#undef SCROLL_RIGHT
+
+#define SCROLL_UP SCROLL_VERT(U_MOUSE_SCROLL_MAX)
+#define SCROLL_DOWN SCROLL_VERT(-U_MOUSE_SCROLL_MAX)
+#define SCROLL_LEFT SCROLL_HOR(-U_MOUSE_SCROLL_MAX)
+#define SCROLL_RIGHT SCROLL_HOR(U_MOUSE_SCROLL_MAX)
+#define TYPING_TERM_MS_HOMEROW_MODS 160
+
+&mwh {
+    time-to-max-speed-ms = <500>;                 /* <--- How long time until max speed is reached */
+    acceleration-exponent = <1>;
+};
+
+&mmv {
+    time-to-max-speed-ms = <500>;             /* <--- How long time until max speed is reached (default: 500) */
+    acceleration-exponent = <1>;
+};
+
+&sl { release-after-ms = <600>; };
+
+/ {
+    combos {
+        compatible = "zmk,combos";
+
+        control_delete {
+            bindings = <&kp LC(BACKSPACE)>;
+            key-positions = <13 33>;
+        };
+
+        esc {
+            bindings = <&kp ESCAPE>;
+            key-positions = <11 12>;
+            require-prior-idle-ms = <150>;
+            timeout-ms = <50>;
+        };
+
+        tab {
+            bindings = <&kp TAB>;
+            key-positions = <1 2>;
+            layers = <0 2 4 6 7>;
+        };
+
+        shift_tab {
+            bindings = <&kp LS(TAB)>;
+            key-positions = <1 2>;
+            layers = <1 3 8>;
+        };
+    };
+
+    behaviors {
+        hml: hml {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <250>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            label = "HML";
+            require-prior-idle-ms = <200>;
+            hold-trigger-key-positions = <5 6 7 8 9 15 16 17 18 19 26 27 28 29 30 31 12 11 13>;
+        };
+
+        hmr: hmr {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+
+            require-prior-idle-ms = <200>;
+            label = "HMR";
+            hold-trigger-key-positions = <0 1 2 3 4 10 11 12 13 14 20 21 22 23 24 25 16 17 18>;
+        };
+
+        hmbackspace: hmbackspace {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HMBACKSPACE";
+            bindings = <&kp>, <&kp>;
+
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <TYPING_TERM_MS_HOMEROW_MODS>;
+        };
+
+        system_layer_toggle: system_layer_toggle {
+            compatible = "zmk,behavior-tap-dance";
+            label = "SYSTEM_LAYER_TOGGLE";
+            #binding-cells = <0>;
+            bindings = <&sl 2>, <&sl 5>;
+
+            tapping-term-ms = <200>;
+        };
+
+        caps: caps {
+            compatible = "zmk,behavior-tap-dance";
+            label = "CAPS";
+            #binding-cells = <0>;
+            bindings = <&quick_release_sl 1>, <&caps_word>;
+
+            tapping-term-ms = <250>;
+        };
+
+        quick_release_sl: quick_release_sl {
+            compatible = "zmk,behavior-sticky-key";
+            label = "QUICK_RELEASE_SL";
+            bindings = <&mo>;
+            #binding-cells = <1>;
+            quick-release;
+            release-after-ms = <500>;
+        };
+
+        mod_mmv: mod_mmv {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MOD_MMV";
+            bindings = <&kp>, <&mmv>;
+
+            #binding-cells = <2>;
+            flavor = "balanced";
+            tapping-term-ms = <TYPING_TERM_MS_HOMEROW_MODS>;
+        };
+
+        mod_scroll: mod_scroll {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MOD_SCROLL";
+            bindings = <&kp>, <&mwh>;
+
+            #binding-cells = <2>;
+            tapping-term-ms = <TYPING_TERM_MS_HOMEROW_MODS>;
+            flavor = "balanced";
+        };
+
+        mouse_tap_dance_up: mouse_tap_dance_up {
+            compatible = "zmk,behavior-tap-dance";
+            label = "MOUSE_TAP_DANCE_UP";
+            #binding-cells = <0>;
+            tapping-term-ms = <150>;
+            bindings = <&mmv MOVE_UP>, <&mwh SCROLL_UP>;
+        };
+
+        tap_dance_to_scroll: tap_dance_to_scroll {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAP_DANCE_TO_SCROLL";
+            #binding-cells = <0>;
+            bindings = <&lt 6 Z>, <&mo 9>;
+
+            tapping-term-ms = <200>;
+        };
+    };
+
+    macros {
+        qu: qu {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp Q &kp U>;
+            label = "QU";
+            wait-ms = <1>;
+            tap-ms = <1>;
+        };
+
+        turn_to_caps_layer: turn_to_caps_layer {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&none>;
+            label = "TURN_TO_CAPS_LAYER";
+        };
+
+        capital_qu: capital_qu {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LS(Q) &kp U>;
+            label = "CAPITAL_QU";
+            wait-ms = <1>;
+            tap-ms = <1>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        default_layer {
+            bindings = <
+        &kp SEMI  &kp COMMA    &kp DOT               &kp P                 &kp Y        &kp F        &kp G                        &kp C            &kp R            &kp L
+        &kp A     &hml LGUI O  &hml LEFT_ALT E       &hmbackspace LCTRL I  &kp U        &kp D        &hmbackspace LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &lt 4 S
+&none   &kp APOS  &kp Q        &kp J                 &kp K                 &kp X        &kp B        &kp M                        &kp W            &kp V            &lt 6 Z  &trans
+                               &system_layer_toggle  &kp BACKSPACE         &kp ENTER    &key_repeat  &kp SPACE                    &caps
+            >;
+        };
+
+        shift_main_layer {
+            bindings = <
+        &kp LS(COLON)  &kp LS(LT)       &kp LS(GT)            &kp LS(P)                        &kp LS(Y)      &kp LS(F)    &kp LS(G)                        &kp LS(C)            &kp LS(R)            &kp LS(L)
+        &kp LS(A)      &hml LGUI LS(O)  &hml LEFT_ALT LS(E)   &hmbackspace LEFT_CONTROL LS(I)  &kp LS(U)      &kp LS(D)    &hmbackspace LEFT_CONTROL LS(H)  &hmr LEFT_ALT LS(T)  &hmr LEFT_GUI LS(N)  &kp LS(S)
+&trans  &kp LS(DQT)    &kp LS(Q)        &kp LS(J)             &kp LS(K)                        &kp LS(X)      &kp LS(B)    &kp LS(M)                        &kp LS(W)            &kp LS(V)            &kp LS(Z)  &trans
+                                        &system_layer_toggle  &kp DELETE                       &kp LS(RET)    &key_repeat  &kp SPACE                        &kp LEFT_SHIFT
+            >;
+        };
+
+        lower_layer {
+            bindings = <
+        &trans  &trans            &trans            &kp LPAR                     &kp GRAVE    &none     &kp RPAR                      &kp EQUAL               &kp PLUS                &none
+        &kp N7  &hml LEFT_GUI N5  &hml LEFT_ALT N3  &hmbackspace LCTRL NUMBER_1  &kp N9       &kp N8    &hmbackspace LEFT_CONTROL N0  &hmr LEFT_ALT NUMBER_2  &hmr LEFT_GUI NUMBER_4  &kp NUMBER_6
+&none   &trans  &kp MINUS         &kp LS(UNDER)     &kp LEFT_BRACKET             &none        &kp BSLH  &kp RIGHT_BRACKET             &kp SLASH               &kp KP_ASTERISK         &none         &none
+                                  &trans            &trans                       &trans       &trans    &trans                        &caps
+            >;
+        };
+
+        shift_lower {
+            bindings = <
+        &trans         &trans                 &trans              &kp GRAVE                              &none     &none   &kp TILDE                           &trans                 &trans                &trans
+        &kp AMPERSAND  &hml LEFT_GUI PERCENT  &hml LEFT_ALT HASH  &hmbackspace LEFT_CONTROL EXCLAMATION  &none     &none   &hmbackspace LEFT_CONTROL QUESTION  &hmr LEFT_ALT AT_SIGN  &hmr LEFT_GUI DOLLAR  &kp LS(CARET)
+&trans  &trans         &trans                 &trans              &kp LEFT_BRACE                         &trans    &trans  &kp LS(RIGHT_BRACE)                 &kp PIPE               &none                 &trans         &trans
+                                              &trans              &trans                                 &trans    &trans  &trans                              &kp LEFT_SHIFT
+            >;
+        };
+
+        vim_layer {
+            bindings = <
+        &none  &none     &none         &none             &none          &none          &none                                 &kp UP_ARROW              &none                      &none
+        &none  &kp LGUI  &kp LEFT_ALT  &kp LEFT_CONTROL  &kp PAGE_UP    &kp PAGE_DOWN  &hmbackspace LEFT_CONTROL LEFT_ARROW  &hmr LEFT_ALT DOWN_ARROW  &hmr LEFT_GUI RIGHT_ARROW  &none
+&none   &none  &none     &none         &none             &kp DELETE     &kp LC(LEFT)   &none                                 &none                     &none                      &none  &none
+                         &trans        &trans            &trans         &trans         &trans                                &kp LEFT_SHIFT
+            >;
+        };
+
+        system_layer {
+            bindings = <
+          &kp F7      &kp F5             &kp F3            &kp F1                &kp F9                  &kp F8        &kp F10                       &kp F2                     &kp F4        &kp F6
+          &kp K_MUTE  &kp C_VOLUME_DOWN  &kp C_VOLUME_UP   &kp C_BRIGHTNESS_DEC  &kp C_BRIGHTNESS_INC    &none         &mt LEFT_CONTROL PRINTSCREEN  &mt LEFT_ALT K_CALCULATOR  &bt BT_NXT    &bt BT_CLR
+&kp F11   &none       &none              &kp K_CALCULATOR  &kp PRINTSCREEN       &none                   &bt BT_SEL 4  &bt BT_SEL 3                  &bt BT_SEL 2               &bt BT_SEL 1  &bt BT_SEL 0  &kp F12
+                                         &trans            &trans                &trans                  &trans        &trans                        &kp LEFT_SHIFT
+            >;
+        };
+
+        left_and_mouse_layer {
+            bindings = <
+        &none  &none         &none         &none             &none        &none      &mkp MB4        &mmv MOVE_UP    &mkp MB5         &none
+        &none  &kp LEFT_GUI  &kp LEFT_ALT  &kp LEFT_CONTROL  &none        &none      &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_RIGHT  &none
+&trans  &none  &none         &none         &none             &none        &none      &mo 9           &mo 9           &mo 9            &none  &none
+                             &trans        &mkp RCLK         &mkp LCLK    &mkp LCLK  &mkp RCLK       &kp LEFT_SHIFT
+            >;
+        };
+
+        excel_layer {
+            bindings = <
+        &tog 8  &kp N7  &kp N8  &kp N9  &kp PLUS     &none   &none   &none   &none  &none
+        &none   &kp N4  &kp N5  &kp N6  &kp N0       &none   &none   &none   &none  &none
+&trans  &none   &kp N1  &kp N2  &kp N3  &kp EQUAL    &none   &none   &none   &none  &none  &none
+                        &trans  &trans  &trans       &trans  &trans  &trans
+            >;
+        };
+
+        excel_layer_upper {
+            bindings = <
+        &tog 8  &kp HOME  &kp UP    &kp PG_UP  &none     &none   &none   &none   &none  &none
+        &none   &kp LEFT  &none     &kp RIGHT  &none     &none   &none   &none   &none  &none
+&trans  &none   &kp END   &kp DOWN  &kp PG_DN  &none     &none   &none   &none   &none  &none  &none
+                          &trans    &trans     &trans    &trans  &trans  &trans
+            >;
+        };
+
+        mouse_scroll_layer {
+            bindings = <
+        &trans  &trans        &trans        &trans            &trans    &trans            &trans            &mwh SCROLL_UP    &trans             &trans
+        &trans  &kp LEFT_GUI  &kp LEFT_ALT  &kp LEFT_CONTROL  &trans    &mwh SCROLL_LEFT  &mwh SCROLL_LEFT  &mwh SCROLL_DOWN  &mwh SCROLL_RIGHT  &trans
+&trans  &trans  &trans        &trans        &trans            &trans    &trans            &trans            &trans            &trans             &trans  &trans
+                              &trans        &trans            &trans    &trans            &trans            &kp LEFT_SHIFT
+            >;
+        };
+    };
+
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+
+        shift_lower {
+            if-layers = <2 1>;
+            then-layer = <3>;
+        };
+
+        excel_layer {
+            if-layers = <6 2>;
+            then-layer = <7>;
+        };
+    };
+};
