@@ -1,3 +1,6 @@
 *.zip
 *.kdenlive
 *.mp4
+*.uf2
+firmware/
+firmware(*)/
