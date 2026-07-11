@@ -1,344 +1,441 @@
 #!/usr/bin/env python3
-"""Turn collected keystroke logs into concrete ZMK timing recommendations.
+"""Find layout/timing changes that reduce your real mistakes and effort.
 
-Reads keylog-*.jsonl (from collector.py), for ONE device (default: totem),
-and detects correction/misfire patterns whose fix is a timing parameter:
+The host sees the keyboard's *resolved output*, so this reconstructs what you
+actually did — modeling gestures, not raw key adjacencies:
 
-  * combo late-misfire   "o e <bksp><bksp> <esc>"  -> esc combo timeout-ms too low
-  * combo accidental     "<esc> <bksp> o e"        -> timeout-ms too high / need idle
-  * homerow accidental hold  "<GUI> <bksp> ..."    -> hold-tap tapping-term / prior-idle
-  * key chatter          same key twice in <25 ms  -> debounce too low
-  * plus corpus stats    (typing speed, correction rate, top erased bigrams,
-                          hold-time and roll-gap distributions)
+  * modifiers are state, not content (Ctrl held + Backspace = delete-WORD, a
+    deliberate correction tool — NOT the mod "misfiring");
+  * navigation (arrows/home/end) is cursor movement, not typing;
+  * a correction = text you typed, then deleted, then retyped. The DIFF between
+    what you erased and what you replaced it with is the actual error.
 
-Then it prints a markdown report with current->proposed values and the
-evidence behind each suggestion. Read-only: it never edits your keymap.
+From those corrections it classifies errors (transposition / substitution /
+doubled / combo-misfire) and, with the keymap geometry, reports ergonomics
+(finger load, same-finger bigrams, hand balance) — then recommends concrete
+timing/layout changes. `--apply-timing` writes the safe mechanical ones back.
 
-  ./run.sh analyze.py ~/notes/life-logging/key-logging/keylog-*.jsonl \
-      --device totem --keymap ../../config/totem.keymap
+  ./run.sh analyze                      # report for the totem
+  ./run.sh analyze --device corne
+  python3 analyze.py LOGS --keymap ../../config/totem.keymap --apply-timing
 """
 import argparse
 import glob
 import json
 import re
 import statistics as st
-import sys
-from collections import Counter, defaultdict
+from collections import Counter
 
-# ---- key groups -------------------------------------------------------------
+# ---- key classes (evdev names) ---------------------------------------------
+CTRL = {"KEY_LEFTCTRL", "KEY_RIGHTCTRL"}
+ALT = {"KEY_LEFTALT", "KEY_RIGHTALT"}
+GUI = {"KEY_LEFTMETA", "KEY_RIGHTMETA"}
+SHIFT = {"KEY_LEFTSHIFT", "KEY_RIGHTSHIFT"}
+MODS = CTRL | ALT | GUI | SHIFT
+COMMANDISH = CTRL | ALT | GUI                      # mods that make a chord a command
+NAV = {"KEY_UP", "KEY_DOWN", "KEY_LEFT", "KEY_RIGHT", "KEY_HOME", "KEY_END",
+       "KEY_PAGEUP", "KEY_PAGEDOWN", "KEY_INSERT", "KEY_DELETE"}
 BKSP = "KEY_BACKSPACE"
-MODS = {"KEY_LEFTMETA", "KEY_RIGHTMETA", "KEY_LEFTALT", "KEY_RIGHTALT",
-        "KEY_LEFTCTRL", "KEY_RIGHTCTRL", "KEY_LEFTSHIFT", "KEY_RIGHTSHIFT"}
-# On the TOTEM/Corne base layer these modifiers originate only from home-row
-# hold-taps, so a bare mod-down is a home-row hold decision.
-HOMEROW_MODS = {"KEY_LEFTMETA", "KEY_RIGHTMETA", "KEY_LEFTALT", "KEY_RIGHTALT",
-                "KEY_LEFTCTRL", "KEY_RIGHTCTRL"}
 
-# Combos worth tuning: rolled letters -> produced key. Derived from the keymap
-# (esc = home O+E, tab = top ,+.). Positions in the .keymap; letters here.
-COMBOS = [
-    {"name": "esc", "letters": {"KEY_O", "KEY_E"}, "out": "KEY_ESC",
-     "knob": "esc combo timeout-ms"},
-    {"name": "tab", "letters": {"KEY_COMMA", "KEY_DOT"}, "out": "KEY_TAB",
-     "knob": "tab combo timeout-ms"},
-]
-
-# windows (ms)
-ROLL_MS = 120          # two letters this close = an intended roll
-CORRECTION_MS = 1500   # a correction follows within this
-HOLD_ACCIDENT_MS = 600 # mod-then-backspace this close = accidental hold
-CHATTER_MS = 25        # same key twice faster than this = switch chatter
+_PUNCT = {"SEMICOLON": ";", "COMMA": ",", "DOT": ".", "SLASH": "/",
+          "APOSTROPHE": "'", "MINUS": "-", "EQUAL": "=", "LEFTBRACE": "[",
+          "RIGHTBRACE": "]", "BACKSLASH": "\\", "GRAVE": "`", "SPACE": " "}
 
 
-def load(paths, device):
-    evs = []
-    for p in paths:
-        with open(p) as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    o = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
-                if o.get("dev") == device:
-                    evs.append(o)
-    evs.sort(key=lambda o: o["t"])
-    return evs
+def to_char(key):
+    """Content character for a key, or None if not text."""
+    if not key.startswith("KEY_"):
+        return None
+    k = key[4:]
+    if len(k) == 1 and (k.isalpha() or k.isdigit()):
+        return k.lower()
+    return _PUNCT.get(k)
 
 
-def downs(evs):
-    """Fresh key presses (val==1), as (t_ms, key)."""
-    return [(int(o["t"] * 1000), o["key"]) for o in evs if o.get("val") == 1]
+# ---- physical geometry: position -> (hand, finger); index spans 2 columns ---
+def totem_geo():
+    F, ROW, HOME = {}, {}, set()
+    lr = [("L", "pinky"), ("L", "ring"), ("L", "middle"), ("L", "index"),
+          ("L", "index"), ("R", "index"), ("R", "index"), ("R", "middle"),
+          ("R", "ring"), ("R", "pinky")]
+    for p, f in zip(range(0, 10), lr):
+        F[p], ROW[p] = f, "top"
+    for p, f in zip(range(10, 20), lr):
+        F[p], ROW[p] = f, "home"
+    bot = [("L", "pinky"), ("L", "pinky"), ("L", "ring"), ("L", "middle"),
+           ("L", "index"), ("L", "index"), ("R", "index"), ("R", "index"),
+           ("R", "middle"), ("R", "ring"), ("R", "pinky"), ("R", "pinky")]
+    for p, f in zip(range(20, 32), bot):
+        F[p], ROW[p] = f, "bottom"
+    for p in (32, 33, 34):
+        F[p], ROW[p] = ("L", "thumb"), "thumb"
+    for p in (35, 36, 37):
+        F[p], ROW[p] = ("R", "thumb"), "thumb"
+    HOME.update([10, 11, 12, 13, 16, 17, 18, 19])
+    return F, ROW, HOME
 
 
-def erase_bursts(evs):
-    """List of (start_ms, end_ms, count) for runs of backspace (down+repeat)."""
-    bursts, cur = [], None
-    for o in evs:
-        t = int(o["t"] * 1000)
-        if o["key"] == BKSP and o["val"] in (1, 2):
-            if cur and t - cur[1] < 400:
-                cur = (cur[0], t, cur[2] + 1)
-            else:
-                if cur:
-                    bursts.append(cur)
-                cur = (t, t, 1)
-        elif o["key"] == BKSP and o["val"] == 0:
+ROW_PEN = {"home": 0.0, "top": 1.0, "bottom": 1.6, "thumb": 0.4}
+FIN_PEN = {"pinky": 1.7, "ring": 1.35, "middle": 1.1, "index": 1.0, "thumb": 0.6}
+
+
+def pos_cost(pos, F, ROW):
+    return round(ROW_PEN[ROW[pos]] * FIN_PEN[F[pos][1]], 2)
+
+
+# ---- parse the base layer: symbol -> position ------------------------------
+_ZKEY = {"SEMI": ";", "SEMICOLON": ";", "COMMA": ",", "DOT": ".", "APOS": "'",
+         "APOSTROPHE": "'", "SLASH": "/", "FSLH": "/", "MINUS": "-",
+         "SQT": "'", "GRAVE": "`", "SPACE": " "}
+
+
+def zsym(tok):
+    t = tok.upper()
+    if len(t) == 1 and (t.isalpha() or t.isdigit()):
+        return t.lower()
+    return _ZKEY.get(t)
+
+
+def parse_base_positions(keymap_text):
+    """Return {char: position} for the default layer (tap value of each key)."""
+    m = re.search(r"default_layer\s*\{.*?bindings\s*=\s*<(.*?)>\s*;",
+                  keymap_text, re.S)
+    if not m:
+        return {}, 0
+    body = re.sub(r"//.*", "", m.group(1))
+    sym2pos, pos = {}, 0
+    for chunk in body.split("&"):
+        chunk = chunk.strip()
+        if not chunk:
             continue
-    if cur:
-        bursts.append(cur)
-    return bursts
+        parts = chunk.split()
+        beh = parts[0]
+        key = None
+        if beh == "kp" and len(parts) >= 2:
+            key = parts[-1]
+        elif beh in ("hml", "hmr", "hmbackspace", "lt") and len(parts) >= 2:
+            key = parts[-1]                       # tap side = last param
+        c = zsym(key) if key else None
+        if c and c not in sym2pos:
+            sym2pos[c] = pos
+        pos += 1
+    return sym2pos, pos
 
 
-# ---- detectors --------------------------------------------------------------
-def detect_combo_misfires(d):
-    """Returns per-combo dict with late/accidental counts + failed roll gaps."""
-    res = {c["name"]: {"late": 0, "accidental": 0, "gaps": []} for c in COMBOS}
-    n = len(d)
-    for i in range(n):
-        t, k = d[i]
-        for c in COMBOS:
-            L, out = c["letters"], c["out"]
-            # LATE: letter, other letter within ROLL, then >=2 bksp, then out
-            if k in L and i + 1 < n:
-                t2, k2 = d[i + 1]
-                if k2 in L and k2 != k and (t2 - t) <= ROLL_MS:
-                    j, bs = i + 2, 0
-                    while j < n and d[j][0] - t2 <= CORRECTION_MS:
-                        if d[j][1] == BKSP:
-                            bs += 1
-                        if d[j][1] == out and bs >= 2:
-                            res[c["name"]]["late"] += 1
-                            res[c["name"]]["gaps"].append(t2 - t)
-                            break
-                        if d[j][1] not in (BKSP, out) and bs == 0:
-                            break
-                        j += 1
-            # ACCIDENTAL: out fired, quickly undone, then letters typed apart.
-            # The undo must directly follow the out — if any ordinary key is
-            # committed first, the out was intended (avoids bridging into a
-            # later, unrelated sequence).
-            if k == out and i + 1 < n:
-                j, sawbs = i + 1, False
-                while j < n and d[j][0] - t <= CORRECTION_MS:
-                    kk = d[j][1]
-                    if kk == BKSP:
-                        sawbs = True
-                    elif kk == out:
-                        pass
-                    elif sawbs and kk in L:
-                        res[c["name"]]["accidental"] += 1
-                        break
-                    elif not sawbs:
-                        break
-                    j += 1
-    return res
+# ---- token stream: gestures, not raw keys ----------------------------------
+class Tok:
+    __slots__ = ("t", "kind", "char", "mods")
+
+    def __init__(self, t, kind, char=None, mods=frozenset()):
+        self.t, self.kind, self.char, self.mods = t, kind, char, mods
 
 
-def detect_homerow_holds(evs, d):
-    """Accidental home-row holds: a bare mod-down closely followed by a
-    correction. Also collect mod hold-times (down->up)."""
-    accidental = Counter()
-    holdur = defaultdict(list)
-    # hold durations
-    pending = {}
+def build_stream(evs):
+    """Modifier-aware token stream. kinds: content/delete1/delword/nav/
+    boundary/shortcut/other."""
+    held, out = set(), []
     for o in evs:
+        k, v = o["key"], o.get("val")
+        if k in MODS:
+            if v == 1:
+                held.add(k)
+            elif v == 0:
+                held.discard(k)
+            continue
+        if v != 1:                                # only fresh presses = tokens
+            continue
         t = int(o["t"] * 1000)
-        if o["key"] in HOMEROW_MODS and o["val"] == 1:
-            pending[o["key"]] = t
-        elif o["key"] in HOMEROW_MODS and o["val"] == 0 and o["key"] in pending:
-            holdur.setdefault(o["key"], []).append(t - pending.pop(o["key"]))
-    # accidental = mod down then backspace within HOLD_ACCIDENT_MS
-    bursts = erase_bursts(evs)
-    burst_starts = [b[0] for b in bursts]
-    for t, k in d:
-        if k in HOMEROW_MODS:
-            if any(0 <= bs - t <= HOLD_ACCIDENT_MS for bs in burst_starts):
-                accidental[k] += 1
-    return accidental, holdur
+        cmd = held & COMMANDISH
+        if k == BKSP:
+            out.append(Tok(t, "delword" if (held & CTRL) else "delete1"))
+        elif k in NAV:
+            out.append(Tok(t, "nav"))
+        elif k in ("KEY_SPACE", "KEY_ENTER", "KEY_TAB", "KEY_ESC"):
+            out.append(Tok(t, "boundary", " " if k == "KEY_SPACE" else ""))
+        elif cmd:
+            out.append(Tok(t, "shortcut", k, frozenset(cmd)))
+        else:
+            c = to_char(k)
+            out.append(Tok(t, "content", c) if c is not None else Tok(t, "other"))
+    return out
 
 
-def detect_chatter(d):
-    hits = Counter()
-    for i in range(1, len(d)):
-        if d[i][1] == d[i - 1][1] and d[i][1] != BKSP:
-            if d[i][0] - d[i - 1][0] < CHATTER_MS:
-                hits[d[i][1]] += 1
-    return hits
+def correction_episodes(stream):
+    """Each deletion burst -> (erased text, retyped text)."""
+    eps, i, n = [], 0, len(stream)
+    while i < n:
+        if stream[i].kind in ("delete1", "delword"):
+            j, dels, delword = i, 0, False
+            while j < n and stream[j].kind in ("delete1", "delword") \
+                    and (j == i or stream[j].t - stream[j - 1].t < 900):
+                delword = delword or stream[j].kind == "delword"
+                dels += 1
+                j += 1
+            pre = []                              # contiguous content before burst
+            k = i - 1
+            while k >= 0 and stream[k].kind == "content" and len(pre) < 16:
+                pre.append(stream[k].char)
+                k -= 1
+            pre.reverse()
+            post, m = [], j                       # contiguous content after burst
+            while m < n and stream[m].kind == "content" and len(post) < 16:
+                post.append(stream[m].char)
+                m += 1
+            s = "".join(pre)
+            if delword:
+                erased = s[s.rfind(" ") + 1:]
+            else:
+                erased = "".join(pre[-dels:]) if dels <= len(pre) else s
+            eps.append((stream[i].t, erased, "".join(post), delword))
+            i = max(m, j)
+        else:
+            i += 1
+    return eps
 
 
-def erased_ngrams(evs, d, n=2, top=12):
-    """Most common sequences typed immediately before a backspace burst."""
-    bursts = erase_bursts(evs)
-    grams = Counter()
-    for start, _, _ in bursts:
-        pre = [k for (t, k) in d if t < start and k != BKSP]
-        if len(pre) >= n:
-            grams["".join(_short(x) for x in pre[-n:])] += 1
-    return grams.most_common(top)
-
-
-def _short(key):
-    m = re.match(r"KEY_(.+)", key)
-    s = m.group(1) if m else key
-    return {"BACKSPACE": "⌫", "SPACE": "␣", "ENTER": "⏎", "ESC": "⎋",
-            "COMMA": ",", "DOT": ".", "SEMICOLON": ";", "APOSTROPHE": "'"}.get(
-                s, s.lower() if len(s) == 1 else s)
+def classify(erased, retyped):
+    """What kind of mistake turned `erased` into `retyped`?"""
+    e, r = erased.strip(), retyped.strip()
+    if not e:
+        return "unknown"
+    # retyped often continues past the fix; compare on the erased length
+    r_head = r[:max(len(e), 1)]
+    if e == r_head:
+        return "restart"                          # deleted then typed the same
+    if {"oe", "eo"} & {e[-2:], r[:2]} or e in ("oe", "eo"):
+        return "combo-misfire(esc)"
+    if e in (",.", ".,"):
+        return "combo-misfire(tab)"
+    if len(e) == len(r_head) and sum(a != b for a, b in zip(e, r_head)) == 1:
+        return "substitution"
+    if sorted(e) == sorted(r_head) and e != r_head:
+        return "transposition"
+    if abs(len(e) - len(r_head)) == 1 and (e in r_head or r_head in e):
+        return "doubled/dropped"
+    return "rewrite"
 
 
 def pctl(xs, p):
     if not xs:
         return None
     xs = sorted(xs)
-    i = min(len(xs) - 1, int(round((p / 100) * (len(xs) - 1))))
-    return xs[i]
+    return xs[min(len(xs) - 1, int(round(p / 100 * (len(xs) - 1))))]
 
 
-# ---- current keymap values (best effort, for current->proposed) -------------
-def keymap_values(path):
+# ---- current keymap values (for current->proposed + apply) -----------------
+def keymap_values(txt):
     v = {}
-    if not path:
-        return v
-    try:
-        txt = open(path).read()
-    except OSError:
-        return v
     m = re.search(r"esc\s*\{[^}]*?timeout-ms\s*=\s*<(\d+)>", txt, re.S)
     if m:
         v["esc combo timeout-ms"] = int(m.group(1))
     for beh in ("hml", "hmr"):
         b = re.search(beh + r":\s*" + beh + r"\s*\{(.*?)\};", txt, re.S)
         if b:
-            body = b.group(1)
             for key in ("tapping-term-ms", "require-prior-idle-ms"):
-                mm = re.search(key + r"\s*=\s*<(\d+)>", body)
+                mm = re.search(key + r"\s*=\s*<(\d+)>", b.group(1))
                 if mm:
                     v[f"{beh} {key}"] = int(mm.group(1))
     return v
 
 
-# ---- report -----------------------------------------------------------------
+def apply_timing(txt, changes):
+    """changes: {'esc combo timeout-ms': val, 'hml require-prior-idle-ms': val, ...}"""
+    applied = []
+    for name, val in changes.items():
+        if name == "esc combo timeout-ms":
+            txt, n = re.subn(r"(esc\s*\{[^}]*?timeout-ms\s*=\s*<)\d+(>)",
+                             rf"\g<1>{val}\g<2>", txt, flags=re.S)
+        elif name.endswith("require-prior-idle-ms") or name.endswith("tapping-term-ms"):
+            beh, key = name.split(" ", 1)
+            b = re.search(beh + r":\s*" + beh + r"\s*\{.*?\};", txt, re.S)
+            if not b:
+                n = 0
+            else:
+                new = re.sub(key + r"\s*=\s*<\d+>", f"{key} = <{val}>", b.group(0))
+                txt = txt[:b.start()] + new + txt[b.end():]
+                n = new != b.group(0)
+        else:
+            n = 0
+        if n:
+            applied.append((name, val))
+    return txt, applied
+
+
+# ---- report ----------------------------------------------------------------
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("files", nargs="+", help="keylog-*.jsonl (globs ok)")
+    ap.add_argument("files", nargs="+")
     ap.add_argument("--device", default="totem")
-    ap.add_argument("--keymap", default=None, help="path to <kb>.keymap for current values")
+    ap.add_argument("--keymap", default=None)
+    ap.add_argument("--apply-timing", action="store_true",
+                    help="write safe timing changes into the keymap (+ .bak)")
     args = ap.parse_args()
 
     paths = []
     for f in args.files:
         paths.extend(sorted(glob.glob(f)) or [f])
-    evs = load(paths, args.device)
-    d = downs(evs)
-    cur = keymap_values(args.keymap)
+    evs = []
+    for p in paths:
+        try:
+            for line in open(p):
+                line = line.strip()
+                if line:
+                    o = json.loads(line)
+                    if o.get("dev") == args.device:
+                        evs.append(o)
+        except (OSError, json.JSONDecodeError):
+            continue
+    evs.sort(key=lambda o: o["t"])
 
-    if len(d) < 50:
-        print(f"# Keylog analysis — device: {args.device}\n")
-        print(f"Only **{len(d)} keypresses** collected for `{args.device}` so far.")
-        print("\nLet the collector run for a few days of real typing, then re-run.")
-        print("Recommendations need a corpus (aim for 5k+ presses) to be trustworthy.")
+    km_txt = open(args.keymap).read() if args.keymap else ""
+    cur = keymap_values(km_txt)
+    sym2pos, ncells = parse_base_positions(km_txt)
+    F, ROW, HOME = totem_geo()
+
+    stream = build_stream(evs)
+    content = [tk for tk in stream if tk.kind == "content"]
+    if len(content) < 200:
+        print(f"# Keylog analysis — `{args.device}`\n\nOnly **{len(content)}** "
+              f"content keypresses so far. Let it run a few days (aim 5k+), "
+              f"then re-run — the error stats need volume to be trustworthy.")
         return
 
-    total = len(d)
-    bs = sum(1 for _, k in d if k == BKSP)
-    intervals = [d[i][0] - d[i - 1][0] for i in range(1, total)
-                 if 0 < d[i][0] - d[i - 1][0] < 2000]
-    combo = detect_combo_misfires(d)
-    accid, holdur = detect_homerow_holds(evs, d)
-    chatter = detect_chatter(d)
-    grams = erased_ngrams(evs, d)
+    out, w = [], lambda s="": out.append(s)
+    eps = correction_episodes(stream)
+    real_eps = [e for e in eps if e[1] and classify(e[1], e[2]) != "restart"]
+    cls = Counter(classify(e[1], e[2]) for e in eps if e[1])
+    nav = sum(1 for tk in stream if tk.kind == "nav")
+    delword = sum(1 for e in eps if e[3])
+    corr_rate = 100 * len(real_eps) / max(1, len(content))
 
-    P = lambda x: f"{pctl(intervals, x)} ms" if intervals else "n/a"
-    out = []
-    w = out.append
-    w(f"# Keylog analysis — device: `{args.device}`\n")
-    w(f"- **{total}** keypresses, **{bs}** backspaces "
-      f"(**{100*bs/total:.1f}%** correction rate)")
-    if intervals:
-        w(f"- inter-key interval: p50 **{P(50)}**, p90 **{P(90)}**, p95 **{P(95)}**")
-        wpm = 60000 / (st.median(intervals) * 5) if st.median(intervals) else 0
-        w(f"- rough typing speed: **~{wpm:.0f} wpm** (median-interval estimate)")
+    w(f"# Keylog analysis — `{args.device}`\n")
+    w(f"- **{len(content)}** content keypresses, **{len(eps)}** correction "
+      f"bursts (**{len(real_eps)}** real typos ⇒ **{corr_rate:.1f}%** typo rate)")
+    w(f"- delete-word (Ctrl+⌫) used **{delword}×** — a deliberate tool, not counted as a misfire")
+    ivs = [content[i].t - content[i-1].t for i in range(1, len(content))
+           if 0 < content[i].t - content[i-1].t < 1000]
+    if ivs:
+        w(f"- typing flow: p50 **{pctl(ivs,50)}ms**, p90 **{pctl(ivs,90)}ms** between letters")
     w("")
 
-    # --- recommendations ---
-    recs = []
-
-    w("## Combo misfires\n")
-    any_combo = False
-    for c in COMBOS:
-        r = combo[c["name"]]
-        if r["late"] or r["accidental"]:
-            any_combo = True
-            w(f"**{c['name']}** ({'+'.join(sorted(_short(x) for x in c['letters']))} "
-              f"→ {_short(c['out'])}): "
-              f"{r['late']}× late-misfire (typed the letters, erased, then {_short(c['out'])}), "
-              f"{r['accidental']}× accidental-fire.")
-            if r["late"] >= 3 and r["late"] > r["accidental"]:
-                gp = pctl(r["gaps"], 85) or 0
-                curv = cur.get(c["knob"])
-                proposed = max((curv or 50) + 10, min(gp + 10, 80))
-                recs.append((c["knob"], curv, proposed,
-                             f"{r['late']} late-misfires; failed rolls landed "
-                             f"at p85={gp}ms > current {curv or '50'}ms window"))
-            if r["accidental"] >= 3 and r["accidental"] > r["late"]:
-                curv = cur.get(c["knob"])
-                proposed = max(30, (curv or 50) - 10)
-                recs.append((c["knob"], curv, proposed,
-                             f"{r['accidental']} accidental fires; combo triggering "
-                             f"on non-intended rolls"))
-    if not any_combo:
-        w("_None detected._")
+    # ---- what you actually mistype ----
+    w("## What you actually mistype\n")
+    w("Error types: " + ", ".join(f"**{k}** {v}" for k, v in cls.most_common()
+                                  if k not in ("restart", "unknown")) + "\n")
+    top_err = Counter(e[1] for e in real_eps if 1 <= len(e[1]) <= 8)
+    if top_err:
+        w("Most-erased strings (the real typos, modifiers excluded):\n")
+        w(" ".join(f"`{s}`×{n}" for s, n in top_err.most_common(15)))
     w("")
 
-    w("## Home-row modifier holds\n")
-    if accid:
-        for k, n in accid.most_common():
-            hs = holdur.get(k, [])
-            hp = f", hold p50={pctl(hs,50)}ms" if hs else ""
-            w(f"- **{_short(k)}**: {n} accidental-hold corrections "
-              f"(mod fired then backspace){hp}")
-        worst = accid.most_common(1)[0][1]
-        if worst >= 3 and intervals:
-            p90 = pctl(intervals, 90)
-            recs.append(("hml/hmr require-prior-idle-ms",
-                         cur.get("hml require-prior-idle-ms"),
-                         max(p90 + 10, (cur.get("hml require-prior-idle-ms") or 150)),
-                         f"{worst} accidental holds; set prior-idle ≥ fast-roll p90 "
-                         f"({p90}ms) so quick rolls can't trigger a hold"))
-    else:
-        w("_None detected._")
-    w("")
+    recs = {}   # name -> (proposed, why)
 
-    w("## Key chatter (switch double-fire)\n")
-    if chatter:
-        for k, n in chatter.most_common():
-            w(f"- **{_short(k)}**: {n}× repeated within {CHATTER_MS}ms")
-        recs.append(("CONFIG_ZMK_KSCAN_DEBOUNCE_*_MS", 7, 9,
-                     "chatter observed; raise debounce a notch"))
-    else:
-        w("_None detected._")
-    w("")
+    # esc combo misfire (the user's flagship example)
+    esc_mis = cls.get("combo-misfire(esc)", 0)
+    if esc_mis >= 3:
+        curv = cur.get("esc combo timeout-ms", 50)
+        recs["esc combo timeout-ms"] = (min(curv + 20, 80),
+            f"{esc_mis} esc-combo misfires (rolled o+e came out as letters)")
 
-    w("## Most-erased sequences (what you retype most)\n")
-    if grams:
-        w(" ".join(f"`{g}`×{n}" for g, n in grams))
-    else:
-        w("_n/a_")
-    w("")
+    # substitution errors between adjacent keys -> possible mispress hotspots
+    subs = Counter()
+    for t, e, r, dw in eps:
+        if e and classify(e, r) == "substitution":
+            rr = r.strip()[:len(e.strip())]
+            for a, b in zip(e.strip(), rr):
+                if a != b:
+                    subs[frozenset((a, b))] += 1
+    if subs:
+        w("## Substitution hotspots (wrong-key presses)\n")
+        w(" ".join(f"`{'/'.join(sorted(p))}`×{n}" for p, n in subs.most_common(10)))
+        w("")
 
-    w("## → Recommended timing changes\n")
-    recs = [r for r in recs if r[1] is None or r[2] != r[1]]   # drop no-ops
-    if recs:
+    # ---- ergonomics from geometry ----
+    sfb = Counter()
+    if sym2pos and ncells >= 30:
+        w("## Ergonomics (layout vs your real frequency)\n")
+        uni = Counter(tk.char for tk in content if tk.char in sym2pos)
+        tot = sum(uni.values())
+        load = Counter()
+        hand = Counter()
+        homep = 0
+        for ch, c in uni.items():
+            p = sym2pos[ch]
+            load[F[p]] += c
+            hand[F[p][0]] += c
+            if p in HOME:
+                homep += c
+        w(f"- hand balance: **L {100*hand['L']/tot:.0f}% / R {100*hand['R']/tot:.0f}%**, "
+          f"home-row **{100*homep/tot:.0f}%** of presses")
+        w("- finger load: " + ", ".join(
+            f"{h[0]}{f[:3]} {100*c/tot:.0f}%" for (h, f), c in load.most_common()
+            if f != "thumb"))
+        # same-finger bigrams
+        sfb = Counter()
+        seq = [tk for tk in content]
+        for i in range(1, len(seq)):
+            a, b = seq[i-1].char, seq[i].char
+            if a in sym2pos and b in sym2pos and a != b \
+                    and seq[i].t - seq[i-1].t < 400:
+                if F[sym2pos[a]] == F[sym2pos[b]]:
+                    sfb[a + b] += 1
+        nb = sum(1 for i in range(1, len(seq))
+                 if seq[i].char in sym2pos and seq[i-1].char in sym2pos)
+        sfb_tot = sum(sfb.values())
+        w(f"- **same-finger bigrams: {100*sfb_tot/max(1,nb):.1f}%** "
+          f"(<1% is excellent, >5% hurts). worst: "
+          + " ".join(f"`{k}`×{v}" for k, v in sfb.most_common(8)))
+        # high-effort keys: frequent letters on costly positions
+        eff = [(ch, c, pos_cost(sym2pos[ch], F, ROW)) for ch, c in uni.items()]
+        worst = sorted(((c/tot)*cost, ch, cost) for ch, c, cost in eff if cost >= 1.5)
+        worst = list(reversed(worst))[:6]
+        if worst:
+            w("- highest-effort keys (frequent × awkward position): "
+              + " ".join(f"`{ch}`(cost {cost})" for _, ch, cost in worst))
+        w("")
+
+    # ---- recommendations ----
+    w("## → Recommended timing changes (safe to auto-apply)\n")
+    tbl = [(n, cur.get(n), v, why) for n, (v, why) in recs.items()
+           if cur.get(n) is None or v != cur.get(n)]
+    if tbl:
         w("| parameter | current | proposed | why |")
         w("|---|---|---|---|")
-        for name, curv, prop, why in recs:
-            w(f"| `{name}` | {curv if curv is not None else '?'} | **{prop}** | {why} |")
+        for n, c, v, why in tbl:
+            w(f"| `{n}` | {c if c is not None else '?'} | **{v}** | {why} |")
     else:
-        w("_No confident change yet — either clean typing or not enough data._")
+        w("_No confident timing change — your combo/hold timing looks fine._")
     w("")
+
+    w("## → Layout ideas (manual — moving a base key touches several layers)\n")
+    ideas = []
+    if sym2pos and sfb:
+        top = sfb.most_common(1)[0]
+        ideas.append(f"Your worst same-finger bigram is `{top[0]}` ({top[1]}×). "
+                     f"Moving one of those letters off that finger's column removes it.")
+    if not ideas:
+        ideas.append("_Nothing egregious in the letter placement yet._")
+    for s in ideas:
+        w("- " + s)
+    w("")
+
     print("\n".join(out))
+
+    if args.apply_timing:
+        changes = {n: v for n, (v, _) in recs.items()
+                   if cur.get(n) is None or v != cur.get(n)}
+        if not changes:
+            print("\n[apply] nothing to apply.")
+            return
+        new, applied = apply_timing(km_txt, changes)
+        if applied:
+            open(args.keymap + ".bak", "w").write(km_txt)
+            open(args.keymap, "w").write(new)
+            print(f"\n[apply] wrote {args.keymap} (backup: {args.keymap}.bak)")
+            print("[apply] " + ", ".join(f"{n}→{v}" for n, v in applied))
+            print("[apply] review with `git diff`, then build+flash when ready.")
+        else:
+            print("\n[apply] no parameters matched in the keymap.")
 
 
 if __name__ == "__main__":
