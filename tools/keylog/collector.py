@@ -109,16 +109,25 @@ class Collector:
             if path not in seen:
                 self._drop(self.open_devs[path], path)
 
-    def _drop(self, dev, path):
+    def _path_of(self, dev):
+        for p, d in self.open_devs.items():
+            if d is dev:
+                return p
+        return None
+
+    def _drop(self, dev, path=None):
+        if path is None:
+            path = self._path_of(dev)
         try:
             self.sel.unregister(dev.fd)
-        except (KeyError, ValueError):
+        except (KeyError, ValueError, OSError):
             pass
         try:
             dev.close()
         except OSError:
             pass
-        self.open_devs.pop(path, None)
+        if path is not None:
+            self.open_devs.pop(path, None)
         print(f"[keylog] - {dev.name!r} ({path})", file=sys.stderr, flush=True)
 
     # ---- main loop ----------------------------------------------------------
@@ -143,8 +152,7 @@ class Collector:
                         })
                 except OSError:
                     # device yanked mid-read (BT drop / unplug)
-                    self._drop(dev, next(p for p, d in self.open_devs.items()
-                                         if d is dev))
+                    self._drop(dev)
             if time.monotonic() >= next_scan:
                 self.rescan()
                 next_scan = time.monotonic() + RESCAN_SEC
