@@ -123,6 +123,9 @@ def parse_base_positions(keymap_text):
 
 
 # ---- token stream: gestures, not raw keys ----------------------------------
+ESC_CHAR = "\x1b"
+
+
 class Tok:
     __slots__ = ("t", "kind", "char", "mods")
 
@@ -151,7 +154,10 @@ def build_stream(evs):
         elif k in NAV:
             out.append(Tok(t, "nav"))
         elif k in ("KEY_SPACE", "KEY_ENTER", "KEY_TAB", "KEY_ESC"):
-            out.append(Tok(t, "boundary", " " if k == "KEY_SPACE" else ""))
+            # keep ESC distinguishable: combo diagnostics need to tell an Esc
+            # from an Enter/Tab. (Only `content` chars feed erased/retyped, so
+            # tagging boundaries here is free.)
+            out.append(Tok(t, "boundary", {"KEY_SPACE": " ", "KEY_ESC": ESC_CHAR}.get(k, "")))
         elif cmd:
             out.append(Tok(t, "shortcut", k, frozenset(cmd)))
         else:
@@ -215,6 +221,42 @@ def classify(erased, retyped):
     return "rewrite"
 
 
+def combo_timing(stream, combo_chars):
+    """For a 2-key combo, split every occurrence of its two letters landing
+    back-to-back as LETTERS into:
+
+      misfires — you meant the combo (you deleted them and hit the combo's key)
+      legit    — you actually wanted those letters (e.g. the 'oe' in 'does')
+
+    and record, for each, the roll gap between the two keys and the idle gap
+    before them. Those two numbers are exactly what ZMK's `timeout-ms` and
+    `require-prior-idle-ms` gate on, so they tell us WHICH knob blocked it --
+    rather than assuming it was the timeout.
+    """
+    cs = set(combo_chars)
+    mis, legit, n = [], [], len(stream)
+    for i in range(1, n - 1):
+        a, b = stream[i], stream[i + 1]
+        if a.kind != "content" or b.kind != "content":
+            continue
+        if {a.char, b.char} != cs:
+            continue
+        roll = b.t - a.t
+        prior = a.t - stream[i - 1].t
+        intended, seen_del = False, False
+        for j in range(i + 2, min(i + 8, n)):
+            tk = stream[j]
+            if tk.kind in ("delete1", "delword"):
+                seen_del = True
+            elif tk.kind == "boundary" and tk.char == ESC_CHAR:
+                intended = seen_del          # deleted the letters, then hit Esc
+                break
+            elif tk.kind != "content":
+                break
+        (mis if intended else legit).append((roll, prior))
+    return mis, legit
+
+
 def pctl(xs, p):
     if not xs:
         return None
@@ -228,6 +270,9 @@ def keymap_values(txt):
     m = re.search(r"esc\s*\{[^}]*?timeout-ms\s*=\s*<(\d+)>", txt, re.S)
     if m:
         v["esc combo timeout-ms"] = int(m.group(1))
+    m = re.search(r"esc\s*\{[^}]*?require-prior-idle-ms\s*=\s*<(\d+)>", txt, re.S)
+    if m:
+        v["esc combo require-prior-idle-ms"] = int(m.group(1))
     for beh in ("hml", "hmr"):
         b = re.search(beh + r":\s*" + beh + r"\s*\{(.*?)\};", txt, re.S)
         if b:
@@ -243,7 +288,10 @@ def apply_timing(txt, changes):
     applied = []
     for name, val in changes.items():
         if name == "esc combo timeout-ms":
-            txt, n = re.subn(r"(esc\s*\{[^}]*?timeout-ms\s*=\s*<)\d+(>)",
+            txt, n = re.subn(r"(esc\s*\{[^}]*?[^-]timeout-ms\s*=\s*<)\d+(>)",
+                             rf"\g<1>{val}\g<2>", txt, flags=re.S)
+        elif name == "esc combo require-prior-idle-ms":
+            txt, n = re.subn(r"(esc\s*\{[^}]*?require-prior-idle-ms\s*=\s*<)\d+(>)",
                              rf"\g<1>{val}\g<2>", txt, flags=re.S)
         elif name.endswith("require-prior-idle-ms") or name.endswith("tapping-term-ms"):
             beh, key = name.split(" ", 1)
@@ -330,12 +378,53 @@ def main():
 
     recs = {}   # name -> (proposed, why)
 
-    # esc combo misfire (the user's flagship example)
-    esc_mis = cls.get("combo-misfire(esc)", 0)
-    if esc_mis >= 3:
-        curv = cur.get("esc combo timeout-ms", 50)
-        recs["esc combo timeout-ms"] = (min(curv + 20, 80),
-            f"{esc_mis} esc-combo misfires (rolled o+e came out as letters)")
+    # ---- esc combo: diagnose WHICH knob blocked each misfire ----------------
+    # A combo can fail two independent ways: the roll was slower than
+    # `timeout-ms`, OR `require-prior-idle-ms` disarmed it because you were
+    # mid-flow. Blaming the timeout by default is how you end up "fixing" the
+    # wrong parameter -- so attribute every misfire, then sweep the trade-off.
+    cur_to = cur.get("esc combo timeout-ms", 50)
+    cur_rpi = cur.get("esc combo require-prior-idle-ms", 150)
+    mis, legit = combo_timing(stream, ("o", "e"))
+    if mis:
+        w("## Esc combo (o+e) — why it actually misfires\n")
+        by_to = sum(1 for roll, _ in mis if roll > cur_to)
+        by_rpi = sum(1 for roll, pr in mis if pr < cur_rpi and roll <= cur_to)
+        w(f"**{len(mis)}** misfires. Blocked by `require-prior-idle-ms`"
+          f"({cur_rpi}): **{by_rpi}** — by `timeout-ms`({cur_to}): **{by_to}**.\n")
+        w("| roll o→e | prior idle | blocked by |")
+        w("|---|---|---|")
+        for roll, pr in sorted(mis, key=lambda x: x[1]):
+            why = []
+            if roll > cur_to:
+                why.append(f"timeout (>{cur_to})")
+            if pr < cur_rpi:
+                why.append(f"require-prior-idle (<{cur_rpi})")
+            w(f"| {roll}ms | {pr}ms | {' + '.join(why) or '— (should have fired)'} |")
+        w("")
+        w("Trade-off — *catches* = misfires that would now correctly fire Esc; "
+          "*false* = real `oe`/`eo` letter pairs (as in \"does\") that would "
+          "wrongly turn into Esc:\n")
+        w("| require-prior-idle | timeout | catches | false Esc |")
+        w("|---|---|---|---|")
+        best = None
+        for rpi in (75, 100, 125, 150):
+            for to in (50, 75, 100):
+                c = sum(1 for roll, pr in mis if roll <= to and pr >= rpi)
+                f = sum(1 for roll, pr in legit if roll <= to and pr >= rpi)
+                w(f"| {rpi} | {to} | {c}/{len(mis)} | {f} |")
+                score = c - 0.5 * f          # a false Esc is half as bad as a miss
+                if best is None or score > best[0]:
+                    best = (score, rpi, to, c, f)
+        w("")
+        _, brpi, bto, bc, bf = best
+        if brpi != cur_rpi:
+            recs["esc combo require-prior-idle-ms"] = (brpi,
+                f"{by_rpi}/{len(mis)} misfires were disarmed by the idle gate, "
+                f"not the timeout; {brpi}ms catches {bc}/{len(mis)} ({bf} false)")
+        if bto != cur_to:
+            recs["esc combo timeout-ms"] = (bto,
+                f"headroom for slow rolls; catches {bc}/{len(mis)} ({bf} false)")
 
     # substitution errors between adjacent keys -> possible mispress hotspots
     subs = Counter()
