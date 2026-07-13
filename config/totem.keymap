@@ -191,6 +191,26 @@
     };
 
     macros {
+        // Speech-to-text (Wispr Flow). Wispr's input helper misses modifiers
+        // that arrive in the same HID report as the key, so press LCTRL, let it
+        // settle, THEN press F12. Holds both until the key is released, so it
+        // works for push-to-talk as well as tap-to-toggle.
+        stt: stt {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "STT";
+            wait-ms = <30>;
+            tap-ms = <30>;
+            bindings
+                = <&macro_press &kp LCTRL>
+                , <&macro_wait_time 40>
+                , <&macro_press &kp F12>
+                , <&macro_pause_for_release>
+                , <&macro_release &kp F12>
+                , <&macro_wait_time 20>
+                , <&macro_release &kp LCTRL>;
+        };
+
         qu: qu {
             compatible = "zmk,behavior-macro";
             #binding-cells = <0>;
@@ -224,7 +244,7 @@
             bindings = <
         &kp SEMI  &kp COMMA    &kp DOT               &kp P                 &kp Y        &kp F        &kp G                        &kp C            &kp R            &kp L
         &kp A     &hml LGUI O  &hml LEFT_ALT E       &hmbackspace LCTRL I  &kp U        &kp D        &hmbackspace LEFT_CONTROL H  &hmr LEFT_ALT T  &hmr LEFT_GUI N  &lt 4 S
-&kp LC(LG(F12))   &kp APOS  &kp Q        &kp J                 &kp K                 &kp X        &kp B        &kp M                        &kp W            &kp V            &lt 6 Z  &trans
+&stt   &kp APOS  &kp Q        &kp J                 &kp K                 &kp X        &kp B        &kp M                        &kp W            &kp V            &lt 6 Z  &trans
                                &system_layer_toggle  &kp BACKSPACE         &kp ENTER    &key_repeat  &kp SPACE                    &caps
             >;
         };
