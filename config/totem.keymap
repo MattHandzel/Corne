@@ -203,11 +203,11 @@
             tap-ms = <30>;
             bindings
                 = <&macro_press &kp LCTRL>
-                , <&macro_wait_time 40>
+                , <&macro_wait_time 150>
                 , <&macro_press &kp F12>
                 , <&macro_pause_for_release>
                 , <&macro_release &kp F12>
-                , <&macro_wait_time 20>
+                , <&macro_wait_time 50>
                 , <&macro_release &kp LCTRL>;
         };
 
