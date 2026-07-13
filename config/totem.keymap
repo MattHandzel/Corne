@@ -335,24 +335,32 @@
             >;
         };
 
-        // Numpad — LAYER 10. Must stay last: layer indices come from declaration
+        // COMMANDS — LAYER 10. Must stay last: layer indices come from declaration
         // order, and &mo 9 / tap_dance_to_scroll already point at layer 9.
         //
-        // These are KEYPAD keycodes, NOT the number row. Hyprland binds KP_1..KP_8
-        // (plus their numlock-off aliases KP_End/KP_Down/KP_Begin/KP_Home/...) to
-        // the STT / prompt-llm / prompt-picker scripts -- KP_5 = prompt-picker.
-        // The lower_layer's plain N1..N9 can never trigger those binds.
+        // Everything here is an ACTION, not a character -- the stuff that doesn't
+        // cleanly map to a letter. Held with the outer-right pinky (pos 31), so the
+        // whole left hand is free:
         //
-        // Held with the outer-right pinky (pos 31); left hand becomes a real numpad:
-        //       7 8 9 +
-        //       4 5 6 -
-        //     / 1 2 3 *        thumbs: 0  .  enter
-        numpad_layer {
+        //   Claude (pinky column)      Command pad (ring/middle/index)
+        //     app  = Super+Shift+F13     7 8 9   <- KP_7 gemini | KP_8 pl-capture
+        //     ask  = F13                 4 5 6   <- KP_4 prompt-llm | KP_5 prompt-picker
+        //                                1 2 3   <- KP_1/2/3 speech-to-text
+        //                     thumbs:  0  .  enter
+        //
+        // These are KEYPAD keycodes, NOT the number row -- hyprland binds KP_1..KP_8
+        // (and their numlock-off aliases KP_End/KP_Down/KP_Begin/KP_Home/...) to the
+        // STT / prompt-llm / prompt-picker scripts. The lower_layer's plain N1..N9
+        // are different keycodes and can never fire those binds.
+        //
+        // F13 mirrors the laptop's Copilot key (code:201): tap = claude-ask,
+        // Super+Shift = focus the Claude.ai app. See hyprland config.nix ~line 542.
+        command_layer {
             bindings = <
-        &none         &kp KP_N7  &kp KP_N8  &kp KP_N9   &kp KP_PLUS          &none  &none  &none  &none  &none
-        &none         &kp KP_N4  &kp KP_N5  &kp KP_N6   &kp KP_MINUS         &none  &none  &none  &none  &none
-&none   &kp KP_SLASH  &kp KP_N1  &kp KP_N2  &kp KP_N3   &kp KP_ASTERISK      &none  &none  &none  &none  &none  &trans
-                                 &kp KP_N0  &kp KP_DOT  &kp KP_ENTER         &trans  &trans  &trans
+        &kp LG(LS(F13))  &kp KP_N7  &kp KP_N8  &kp KP_N9   &none            &none  &none  &none  &none  &none
+        &kp F13          &kp KP_N4  &kp KP_N5  &kp KP_N6   &none            &none  &none  &none  &none  &none
+&none   &none            &kp KP_N1  &kp KP_N2  &kp KP_N3   &none            &none  &none  &none  &none  &none  &trans
+                                    &kp KP_N0  &kp KP_DOT  &kp KP_ENTER     &trans  &trans  &trans
             >;
         };
     };
