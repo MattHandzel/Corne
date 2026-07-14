@@ -4,3 +4,11 @@
 *.uf2
 firmware/
 firmware(*)/
+
+# local ZMK build workspace (west) — see build.sh
+/.west/
+/zmk/
+/modules/
+/zephyr/
+/build/
+/.firmware/
